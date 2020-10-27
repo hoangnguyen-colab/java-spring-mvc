@@ -4,19 +4,20 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Product {
-    public int ProductID;
-    public String ProductName;
-    public String ProductDescription;
-    public BigDecimal ProductPrice;
-    public BigDecimal PromotionPrice;
-    public int Rating;
-    public String ProductImage;
-    public int ProductStock;
-    public String ProductURL;
-    public int Viewcount;
-    public Boolean ProductStatus;
-    public Date CreatedDate;
-    public int BrandID;
+    
+    private int ProductID;
+    private String ProductName;
+    private String ProductDescription;
+    private BigDecimal ProductPrice;
+    private BigDecimal PromotionPrice;
+    private int Rating;
+    private String ProductImage;
+    private int ProductStock;
+    private String ProductURL;
+    private int Viewcount;
+    private Boolean ProductStatus;
+    private Date CreatedDate;
+    private int BrandID;
 
     public Product() {
     }
