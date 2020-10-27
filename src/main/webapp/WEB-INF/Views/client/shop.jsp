@@ -7,16 +7,16 @@
         <title>Shop</title>
     </head>
     <body>
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/loading-spinner.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/jquery-ui.css'/>">
-        
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/loading-spinner.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/jquery-ui.css'/>">
+
         <div class="breadcrumb-area pt-255 pb-170" style="background-image: url()">
             <div class="container-fluid">
                 <div class="breadcrumb-content text-center">
                     <h2>cửa hàng</h2>
                     <ul>
                         <li>
-                            <a href="@Url.Action("Index", "Home")">home</a>
+                            <a href="<c:url value="/"/>">home</a>
                         </li>
                         <li>cửa hàng</li>
                     </ul>
@@ -43,7 +43,7 @@
                                 <div class="widget-categories">
                                     <ul id="category-content">
                                         <li><a href="#">Tất cả</a></li>
-                                        <%@ include file="/common/client/partialview/navbrand.jsp" %>
+                                            <%@ include file="/common/client/partialview/navbrand.jsp" %>
                                     </ul>
                                 </div>
                             </div>
@@ -95,68 +95,133 @@
         </div>
 
 
-        <script src="<c:url value="/assets/js/jquery-ui.js"/>"></script>
+        <script src="<c:url value="/assets/client/js/jquery-ui.js"/>"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 let search = "@ViewBag.search";
                 let sort = "@ViewBag.sort";
                 let pageindex = 0;
-                $.get("123123", function (data) {
-                    console.log("Run")
-                    //$("#category-content").append(data);
+                $.ajax({
+                    url: "<c:url value="shop/productdata"/>",
+                    type: "GET",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#loader").hide();
+                        for (var i = 0; i < data.length; i++) {
+                            createProduct(data[i]);
+                        }
+                    }
+                });
+                function createProduct(data) {
+                    console.log(data.ProductID);
+                    $("#product-content").append(`
+                <div class="product-width col-md-4 col-xl-3 col-lg-4">
+                    <div class="product-wrapper mb-35">
+                        <div class="product-img">
+                            <a href="#">
+                                <img src="` + data.ProductImage + `" />" alt="` + data.ProductName + `">
+                            </a>
+                            <div class="product-action">
+                                <a class="action-plus-2 p-action-none" title="Thêm vào giỏ hàng"
+                                   href="#">
+                                    <i class="ti-shopping-cart"></i>
+                                </a>
+                            </div>
+                            <div class="product-content-wrapper">
+                                <div class="product-title-spreed">
+                                    <h4>
+                                        <a href="#">` + data.ProductName + `</a>
+                                    </h4>
+                                </div>
+                                <div class="product-price">
+                                                        `);
+                    if (data.PromotionPrice !== null) {
+                        $("#product-content").append(`<span>` + data.PromotionPrice + `</span>`);
+                    } else {
+                        $("#product-content").append(`<span>` + data.ProductPrice + `</span>`);
+                    }
+                    $("#product-content").append(`
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-list-details">
+                            <h2>
+                                <a href="#">` + data.ProductName +`</a>
+                            </h2>
+                            <div class="quick-view-rating">
+                                <i class="fa fa-star reting-color"></i>
+                                <i class="fa fa-star reting-color"></i>
+                                <i class="fa fa-star reting-color"></i>
+                                <i class="fa fa-star reting-color"></i>
+                                <i class="fa fa-star reting-color"></i>
+                            </div>
+                            <div class="product-price">
+                    `);
+                        if (data.PromotionPrice !== null) {
+                    $("#product-content").append(`<span>` + data.PromotionPrice + `</span>`);
+                        } else {
+                    $("#product-content").append(`<span>` + data.ProductPrice + `</span>`);
+                    }
+                    $("#product-content").append(`
+                            </div>
+                            <p>` + data.ProductDescription + `</p>
+                            <div class="shop-list-cart">
+                                <a href="#"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>`);
                 }
-                );
-        
-                $.post("123123",
-                        {
+
+                        $.post("123123",
+                            {
                             "search": search,
                             "sort": sort,
-                            "pageindex": pageindex
+                        "pageindex": pageindex
                         },
-                        function (data) {
+                            function (data) {
                             $("#product-content").append(data);
-                            $("#loader").hide();
-                        }
+                        $("#loader").hide();
+                }
                 );
-        
-                $("#sort-filter").on('change', function (event) {
-                    let url =
-                            '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
+                    $("#sort-filter").on('change', function (event) {
+                            let url =
+                    '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
                     url = url.replace("search-value", search);
                     url = url.replace("sort-value", this.value);
-                    window.location.href = url;
+                window.location.href = url;
                 });
-                
-                $("#search-product").autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
+                    $("#search-product").autocomplete({
+                        source: function (request, response) {
+                            $.ajax({
                             url: "123123",
                             type: "POST",
                             dataType: "json",
                             data: {prefix: request.term},
-                            success: function (data) {
-                                response($.map(data.name, function (item) {
-                                    return {label: item.ProductName, value: item.ProductName};
-                                }));
-                            }
-                        });
+                                success: function (data) {
+                                    response($.map(data.name, function (item) {
+                                return {label: item.ProductName, value: item.ProductName};
+                            }));
+                        }
+                    });
                     },
-                    minLength: 2
+                minLength: 2
                 });
-                $("#load-more").click(function () {
+                    $("#load-more").click(function () {
                     $("#loader").show();
                     pageindex += 1;
-                    $.post("123123",
-                            {
+                            $.post("123123",
+                                {
                                 "search": search,
                                 "sort": sort,
-                                "pageindex": pageindex
+                            "pageindex": pageindex
                             },
-                            function (data) {
+                                function (data) {
                                 $("#product-content").append(data);
-                                $("#loader").hide();
-                            });
+                            $("#loader").hide();
                 });
+            });
             });
         </script>
 
