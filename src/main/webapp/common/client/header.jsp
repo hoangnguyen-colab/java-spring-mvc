@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-4">
                     <div class="logo-small-device">
-                        <a href="#"><img alt="" src="<c:url value='/assets/img/logo/logo-1.png'/>"></a>
+                        <a href="<c:url value="/" />"><img alt="" src="<c:url value='/assets/client/img/logo/logo-1.png'/>"></a>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-8">
@@ -17,25 +17,25 @@
                         </div>
                         <div class="menu-wrapper text-center">
                             <button class="menu-toggle">
-                                <img class="s-open" alt="" src="<c:url value='assets/img/icon-img/menu.png'/>">
-                                <img class="s-close" alt="" src="<c:url value='assets/img/icon-img/menu-close.png'/>">
+                                <img class="s-open" alt="" src="<c:url value='assets/client/img/icon-img/menu.png'/>">
+                                <img class="s-close" alt="" src="<c:url value='assets/client/img/icon-img/menu-close.png'/>">
                             </button>
                             <div class="main-menu">
                                 <nav>
                                     <ul>
                                         <li><a href="<c:url value="/" />">home</a></li>
                                         <li>
-                                            <a href="@<c:url value="/shop" />">sản phẩm</a>
+                                            <a href="<c:url value="/shop" />">sản phẩm</a>
                                             <ul class="dropdown partial-content">
-                                                <%@ include file="/common/partialview/navbrand.jsp" %>
+                                                <%@ include file="/common/client/partialview/navbrand.jsp" %>
                                             </ul>
                                         </li>
                                         <li class="active">
-                                            <a href="<c:url value="/about" />">về tôi</a>
+                                            <a href="<c:url value="about" />">về tôi</a>
                                         </li>
-                                        <li><a href="<c:url value="/contact" />">liên hệ</a></li>
+                                        <li><a href="<c:url value="contact" />">liên hệ</a></li>
                                         <li>
-                                            <a href="<c:url value="/login" />">đăng nhập</a>
+                                            <a href="<c:url value="login" />">đăng nhập</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -54,7 +54,7 @@
                                 <li>
                                     <a href="<c:url value="/shop" />">sản phẩm</a>
                                     <ul class="dropdown partial-content">
-                                        <%@ include file="/common/partialview/navbrand.jsp" %>
+                                        <%@ include file="/common/client/partialview/navbrand.jsp" %>
                                     </ul>
                                 </li>
                                 <li class="active">

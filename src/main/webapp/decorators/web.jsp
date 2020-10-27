@@ -6,42 +6,42 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Trang Chu</title>
+        <title><dec:title/></title>
         <!-- all css here -->
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/bootstrap.min.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/animate.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/owl.carousel.min.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/chosen.min.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/icofont.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/themify-icons.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/font-awesome.min.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/meanmenu.min.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/bundle.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/style.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/css/responsive.css'/>">
-        <script src="<c:url value='/assets/js/vendor/modernizr-2.8.3.min.js'/>"></script>
-        <script src="<c:url value='/assets/js/vendor/jquery-1.12.0.min.js'/>"></script>
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/bootstrap.min.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/animate.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/owl.carousel.min.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/chosen.min.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/icofont.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/themify-icons.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/font-awesome.min.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/meanmenu.min.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/bundle.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/style.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/responsive.css'/>">
+        <script src="<c:url value='/assets/client/js/vendor/modernizr-2.8.3.min.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/vendor/jquery-1.12.0.min.js'/>"></script>
     </head>
     <body>
         <div class="wrapper">
-            <%@ include file="/common/header.jsp" %>
+            <%@ include file="/common/client/header.jsp" %>
 
             <dec:body />
 
-            <%@ include file="/common/footer.jsp" %>
+            <%@ include file="/common/client/footer.jsp" %>
         </div>
 
         <!-- all js here -->
-        <script src="<c:url value='/assets/js/popper.js'/>"></script>
-        <script src="<c:url value='/assets/js/bootstrap.min.js'/>"></script>
-        <script src="<c:url value='/assets/js/isotope.pkgd.min.js'/>"></script>
-        <script src="<c:url value='/assets/js/imagesloaded.pkgd.min.js'/>"></script>
-        <script src="<c:url value='/assets/js/jquery.counterup.min.js'/>"></script>
-        <script src="<c:url value='/assets/js/waypoints.min.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/popper.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/bootstrap.min.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/isotope.pkgd.min.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/imagesloaded.pkgd.min.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/jquery.counterup.min.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/waypoints.min.js'/>"></script>
 
-        <script src="<c:url value='/assets/js/owl.carousel.min.js'/>"></script>
-        <script src="<c:url value='/assets/js/plugins.js'/>"></script>
-        <script src="<c:url value='/assets/js/main.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/owl.carousel.min.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/plugins.js'/>"></script>
+        <script src="<c:url value='/assets/client/js/main.js'/>"></script>
         <script>
             $(document).ready(function () {
                 $.get("https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true", function (data) {

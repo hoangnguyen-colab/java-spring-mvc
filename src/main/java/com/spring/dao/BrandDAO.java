@@ -5,8 +5,11 @@
  */
 package com.spring.dao;
 
+import com.spring.dbcontext.DbContext;
 import com.spring.entity.Brand;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,12 +18,12 @@ import java.util.List;
 
 public class BrandDAO {
 
-    public List<Brand> GetData(Connection conn) {
-        List<Brand> list = new ArrayList<>();
-        Statement st = null;
-        String query = "SELECT * FROM Brand";
+    public List<Brand> GetData() {
+        Connection conn = DbContext.getConnection();
         try {
-            st = conn.createStatement();
+            List<Brand> list = new ArrayList<>();
+            Statement st = conn.createStatement();
+            String query = "SELECT * FROM Brand";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
@@ -30,16 +33,32 @@ public class BrandDAO {
 
                 list.add(new Brand(id, name, url));
             }
-
-            try {
-                conn.close();
-            } catch (Exception e) {
-            }
-
             return list;
 
         } catch (SQLException e) {
             return null;
         }
+    }
+
+    public boolean InsertData(Brand brand) {
+        Connection conn = DbContext.getConnection();
+        try {
+            String sql = "INSERT INTO dbo.Brand (id, ten, Class, Age, Sex) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setInt(1, brand.getBrandID());
+            statement.setString(2, brand.getBrandName());
+            statement.setString(3, brand.getBrandUrl());
+            statement.setDate(4, java.sql.Date.valueOf(java.time.LocalDate.now()));
+
+            int rs = statement.executeUpdate();
+            if (rs == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            return false;
+        }
+        return false;
     }
 }

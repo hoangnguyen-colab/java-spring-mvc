@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Show</title>
+        <title>Shop</title>
     </head>
     <body>
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/loading-spinner.css'/>">
@@ -43,7 +43,7 @@
                                 <div class="widget-categories">
                                     <ul id="category-content">
                                         <li><a href="#">Tất cả</a></li>
-                                        <%@ include file="/common/partialview/navbrand.jsp" %>
+                                        <%@ include file="/common/client/partialview/navbrand.jsp" %>
                                     </ul>
                                 </div>
                             </div>
