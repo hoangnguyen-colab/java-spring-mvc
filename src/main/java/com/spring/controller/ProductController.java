@@ -12,17 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProductController {
 
-    private DbContext db = new DbContext();
-    
     @RequestMapping(value = "shop")
     public ModelAndView Shop() {
-        ModelAndView mv = new ModelAndView("shop");
-        Connection conn = db.getConnection();
-        List<Brand> list = null;
-        if (conn != null) {
-            list = new BrandDAO().GetData(conn);
-            mv.addObject("list", list);
-        }
-        return mv;
+        return new ModelAndView("shop");
     }
 }

@@ -16,8 +16,8 @@ public class DbContext {
 
     private final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private final String connString = "jdbc:sqlserver://localhost:1433;databaseName=SHOPDIENTHOAI;instance=SQLSERVER;encrypt=true;trustServerCertificate=true";
-    private final String username = "root";
-    private final String password = "root";
+    private final String username = "hung";
+    private final String password = "123456";
 
     public Connection getConnection() {
         try {

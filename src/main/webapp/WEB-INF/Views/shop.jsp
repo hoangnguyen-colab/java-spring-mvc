@@ -101,7 +101,7 @@
                 let search = "@ViewBag.search";
                 let sort = "@ViewBag.sort";
                 let pageindex = 0;
-                $.get("<c:url value="/navbrandjson"/>", function (data) {
+                $.get("123123", function (data) {
                     console.log("Run")
                     //$("#category-content").append(data);
                 }

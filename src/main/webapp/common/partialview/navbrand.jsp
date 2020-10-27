@@ -3,7 +3,7 @@
 
 <c:forEach var="item" items="${list}">
     <li>
-        <a href="#">
+        <a href="<c:url value=""/>">
             ${item.getBrandName()}
         </a>
     </li>

@@ -23,19 +23,19 @@
                             <div class="main-menu">
                                 <nav>
                                     <ul>
-                                        <li><a href="@Url.Action("Index", "Home")">home</a></li>
+                                        <li><a href="<c:url value="/" />">home</a></li>
                                         <li>
-                                            <a href="@Url.Action("Shop", "Shop")">sản phẩm</a>
-                                            <ul class="dropdown partial-content" data-url="@Url.Action("NavbarCategory", "Home")">
-                                                <li><a>Loading</a></li>
+                                            <a href="@<c:url value="/shop" />">sản phẩm</a>
+                                            <ul class="dropdown partial-content">
+                                                <%@ include file="/common/partialview/navbrand.jsp" %>
                                             </ul>
                                         </li>
                                         <li class="active">
-                                            <a href="@Url.Action("About", "Home")">về tôi</a>
+                                            <a href="<c:url value="/about" />">về tôi</a>
                                         </li>
-                                        <li><a href="@Url.Action("Contact", "Home")">liên hệ</a></li>
+                                        <li><a href="<c:url value="/contact" />">liên hệ</a></li>
                                         <li>
-                                            <a href="@Url.Action("Login", "Customer")">đăng nhập</a>
+                                            <a href="<c:url value="/login" />">đăng nhập</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -50,22 +50,22 @@
                     <div class="mobile-menu">
                         <nav id="mobile-menu-active">
                             <ul class="menu-overflow">
-                                <li><a href="@Url.Action("Index", "Home")">home</a></li>
+                                <li><a href="<c:url value="/" />">home</a></li>
                                 <li>
-                                    <a href="@Url.Action("Shop", "Shop")">sản phẩm</a>
-                                    <ul class="dropdown partial-content" data-url="@Url.Action("NavbarCategory", "Home")">
-                                        <li><a>Loading</a></li>
+                                    <a href="<c:url value="/shop" />">sản phẩm</a>
+                                    <ul class="dropdown partial-content">
+                                        <%@ include file="/common/partialview/navbrand.jsp" %>
                                     </ul>
                                 </li>
                                 <li class="active">
-                                    <a href="@Url.Action("About", "Home")">về tôi</a>
+                                    <a href="<c:url value="/about" />">về tôi</a>
                                 </li>
-                                <li><a href="@Url.Action("Contact", "Home")">liên hệ</a></li>
+                                <li><a href="<c:url value="/contact" />">liên hệ</a></li>
                                 <li>
-                                    <a href="@Url.Action("Cart", "Cart")">giỏ hàng</a>
+                                    <a href="<c:url value="/cart" />">giỏ hàng</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Login", "Customer")">đăng nhập</a>
+                                    <a href="<c:url value="/login" />">đăng nhập</a>
                                 </li>
 
                             </ul>

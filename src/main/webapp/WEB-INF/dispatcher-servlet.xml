@@ -27,5 +27,8 @@ and open the template in the editor.
         <property name="suffix" value=".jsp" />
     </bean>
     <mvc:resources mapping="/assets/**" location="/assets/" />
-    
+    <mvc:interceptors>
+        <bean class="com.spring.interceptor.MenuHandlerInterceptor"></bean>
+    </mvc:interceptors>
+
 </beans>
