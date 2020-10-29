@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="tag" uri="/WEB-INF/taglib/client/pagination.tld" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -85,9 +86,7 @@
                         </div>
                         <!--Load Btn-->
                         <div class="paginations text-center mt-20">
-                            <div class="btn">
-                                <button id="load-more">Tải thêm</button>
-                            </div>
+                            <tag:paginate max="10" offset="${offset}" uri="/shop" count="${count}" next="&raquo;" previous="&laquo;" />
                         </div>
                     </div>
                 </div>
@@ -109,7 +108,7 @@
                     success: function (data) {
                         $("#loader").hide();
                         for (var i = 0; i < data.length; i++) {
-                            createProduct(data[i]);
+                            //createProduct(data[i]);
                         }
                     }
                 });
@@ -147,7 +146,7 @@
                         </div>
                         <div class="product-list-details">
                             <h2>
-                                <a href="#">` + data.ProductName +`</a>
+                                <a href="#">` + data.ProductName + `</a>
                             </h2>
                             <div class="quick-view-rating">
                                 <i class="fa fa-star reting-color"></i>
@@ -158,10 +157,10 @@
                             </div>
                             <div class="product-price">
                     `);
-                        if (data.PromotionPrice !== null) {
-                    $("#product-content").append(`<span>` + data.PromotionPrice + `</span>`);
-                        } else {
-                    $("#product-content").append(`<span>` + data.ProductPrice + `</span>`);
+                    if (data.PromotionPrice !== null) {
+                        $("#product-content").append(`<span>` + data.PromotionPrice + `</span>`);
+                    } else {
+                        $("#product-content").append(`<span>` + data.ProductPrice + `</span>`);
                     }
                     $("#product-content").append(`
                             </div>
@@ -174,54 +173,54 @@
                 </div>`);
                 }
 
-                        $.post("123123",
-                            {
+                $.post("123123",
+                        {
                             "search": search,
                             "sort": sort,
-                        "pageindex": pageindex
+                            "pageindex": pageindex
                         },
-                            function (data) {
+                        function (data) {
                             $("#product-content").append(data);
-                        $("#loader").hide();
-                }
+                            $("#loader").hide();
+                        }
                 );
-                    $("#sort-filter").on('change', function (event) {
-                            let url =
-                    '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
+                $("#sort-filter").on('change', function (event) {
+                    let url =
+                            '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
                     url = url.replace("search-value", search);
                     url = url.replace("sort-value", this.value);
-                window.location.href = url;
+                    window.location.href = url;
                 });
-                    $("#search-product").autocomplete({
-                        source: function (request, response) {
-                            $.ajax({
+                $("#search-product").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
                             url: "123123",
                             type: "POST",
                             dataType: "json",
                             data: {prefix: request.term},
-                                success: function (data) {
-                                    response($.map(data.name, function (item) {
-                                return {label: item.ProductName, value: item.ProductName};
-                            }));
-                        }
-                    });
+                            success: function (data) {
+                                response($.map(data.name, function (item) {
+                                    return {label: item.ProductName, value: item.ProductName};
+                                }));
+                            }
+                        });
                     },
-                minLength: 2
+                    minLength: 2
                 });
-                    $("#load-more").click(function () {
+                $("#load-more").click(function () {
                     $("#loader").show();
                     pageindex += 1;
-                            $.post("123123",
-                                {
+                    $.post("123123",
+                            {
                                 "search": search,
                                 "sort": sort,
-                            "pageindex": pageindex
+                                "pageindex": pageindex
                             },
-                                function (data) {
+                            function (data) {
                                 $("#product-content").append(data);
-                            $("#loader").hide();
+                                $("#loader").hide();
+                            });
                 });
-            });
             });
         </script>
 

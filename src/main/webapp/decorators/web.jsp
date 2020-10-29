@@ -44,8 +44,8 @@
         <script src="<c:url value='/assets/client/js/main.js'/>"></script>
         <script>
             $(document).ready(function () {
-                $.get("https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true", function (data) {
-                    var html = $("#covid-data");
+//                $.get("https://api.apify.com/v2/key-value-stores/tVaYRsPHLjNdNBu7S/records/LATEST?disableRedirect=true", function (data) {
+//                    var html = $("#covid-data");
 //                    for (i = 0; i < data.length; i++) {
 //                        html.append(`<tr>
 //                                        <th scope="row">${i + 1}</th>
@@ -55,9 +55,9 @@
 //                                        <td>${data[i].recovered}</td>
 //                                    </tr>`);
 //                    }
-
-                    $('#covid-table').DataTable()
-                });
+//
+//                    $('#covid-table').DataTable()
+//                });
             });
         </script>
         <script type="text/javascript">

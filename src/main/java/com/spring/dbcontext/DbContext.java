@@ -7,15 +7,16 @@ public class DbContext {
 
     private static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String connString = "jdbc:sqlserver://localhost:1433;databaseName=SHOPDIENTHOAI;instance=SQLSERVER;encrypt=true;trustServerCertificate=true";
-    private static final String username = "hung";
-    private static final String password = "123456";
+    private static final String username = "root";
+    private static final String password = "root";
 
     public static Connection getConnection() {
         try {
             Class.forName(driver);
             return DriverManager.getConnection(connString, username, password);
         } catch (Exception e) {
-            return null;
+            throw new RuntimeException("Connecting database error", e);
+            //return null;
         }
     }
 }

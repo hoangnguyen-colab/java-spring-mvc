@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Product {
-    
+
     private int ProductID;
     private String ProductName;
     private String ProductDescription;
@@ -21,7 +21,18 @@ public class Product {
 
     public Product() {
     }
-    
+
+    public Product(int ProductID, String ProductName, String ProductDescription, BigDecimal ProductPrice, BigDecimal PromotionPrice, String ProductImage, String ProductURL, int BrandID) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.ProductDescription = ProductDescription;
+        this.ProductPrice = ProductPrice;
+        this.PromotionPrice = PromotionPrice;
+        this.ProductImage = ProductImage;
+        this.ProductURL = ProductURL;
+        this.BrandID = BrandID;
+    }
+
     public Product(String ProductName, String ProductDescription, BigDecimal ProductPrice, BigDecimal PromotionPrice, int Rating, String ProductImage, int ProductStock, Boolean ProductStatus, int BrandID) {
         this.ProductName = ProductName;
         this.ProductDescription = ProductDescription;
@@ -33,7 +44,7 @@ public class Product {
         this.ProductStatus = ProductStatus;
         this.BrandID = BrandID;
     }
-    
+
     public int getProductID() {
         return ProductID;
     }
@@ -137,6 +148,5 @@ public class Product {
     public void setBrandID(int BrandID) {
         this.BrandID = BrandID;
     }
-    
-    
+
 }

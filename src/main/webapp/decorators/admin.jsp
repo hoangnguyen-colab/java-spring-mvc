@@ -8,9 +8,15 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title><dec:title/></title>
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/admin/css/bootstrap.min.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/admin/css/css/icons.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/admin/css/icons.css'/>">
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/admin/css/menu.css'/>">
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/admin/css/style.css'/>">
+        <script src="<c:url value='/assets/admin/js/jquery-3.2.1.min.js'/>"></script>
+        <script src="<c:url value='/assets/admin/js/popper.min.js'/>"></script>
+        <script src="<c:url value='/assets/admin/js/bootstrap.min.js'/>"></script>
+        <script src="<c:url value='/assets/admin/js/jquery.slimscroll.min.js'/>"></script>
+        <script src="<c:url value='/assets/admin/js/slidebars.min.js'/>"></script>
+        <script src="<c:url value='/assets/admin/js/jquery.app.js'/>"></script>
     </head>
 
     <body class="sticky-header">
@@ -56,11 +62,5 @@
                 <dec:body />
             </div>
         </section>
-        <script src="<c:url value='/assets/admin/js/jquery-3.2.1.min.js'/>"></script>
-        <script src="<c:url value='/assets/admin/js/popper.min.js'/>"></script>
-        <script src="<c:url value='/assets/admin/js/bootstrap.min.js'/>"></script>
-        <script src="<c:url value='/assets/admin/js/jquery.slimscroll.min.js'/>"></script>
-        <script src="<c:url value='/assets/admin/js/slidebars.min.js'/>"></script>
-        <script src="<c:url value='/assets/admin/js/jquery.app.js'/>"></script>
     </body>
 </html>

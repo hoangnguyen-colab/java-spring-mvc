@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.spring.dao;
 
 import com.spring.dbcontext.DbContext;
 import com.spring.entity.Brand;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +17,7 @@ public class BrandDAO {
         try {
             List<Brand> list = new ArrayList<>();
             Statement st = conn.createStatement();
-            String query = "SELECT * FROM Brand";
+            String query = "SELECT * FROM BRAND";
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
