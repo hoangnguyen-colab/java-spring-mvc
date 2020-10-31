@@ -1,27 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.spring.entity;
 
-/**
- *
- * @author Hoang Nguyen
- */
+import java.sql.Date;
+
 public class Brand {
 
     private int BrandID;
     private String BrandName;
     private String BrandUrl;
+    private Date CreatedDate;
 
     public Brand() {
     }
 
-    public Brand(int BrandID, String BrandName, String BrandUrl) {
+    public Brand(int BrandID, String BrandName, String BrandUrl, Date CreatedDate) {
         this.BrandID = BrandID;
         this.BrandName = BrandName;
         this.BrandUrl = BrandUrl;
+        this.CreatedDate = CreatedDate;
     }
 
     public int getBrandID() {
@@ -48,4 +43,11 @@ public class Brand {
         this.BrandUrl = BrandUrl;
     }
 
+    public Date getCreatedDate() {
+        return CreatedDate;
+    }
+
+    public void setCreatedDate(Date CreatedDate) {
+        this.CreatedDate = CreatedDate;
+    }
 }

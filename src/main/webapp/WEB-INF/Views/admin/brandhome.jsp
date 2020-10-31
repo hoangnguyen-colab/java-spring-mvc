@@ -15,28 +15,28 @@
 
         <div class="row">
             <div class="col-lg-3">
+                <form action="#" id="brand-submit-form" method="post" novalidate="novalidate"><div class="form-horizontal">
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-md-6">Brand Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" type="text" name="brand-input" id="brand-input">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-6">Brand URL</label>
+                            <div class="col-md-10">
+                                <h5 id="brand-url">(name)</h5>
+                            </div>
+                        </div>
 
-                <div class="form-horizontal">
-                    <hr />
-                    <div class="form-group">
-                        <label class="control-label col-md-6">Brand Name</label>
-                        <div class="col-md-10">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-primary" id="create-btn"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-6">Brand URL</label>
-                        <div class="col-md-10">
-                            <h5 id="brand-url">(name)</h5>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-primary" />
-                        </div>
-                    </div>
-                </div>
-
+                </form>
             </div>
             <div class="col-sm" id="brand-partial">
                 <div class="card-body">
@@ -75,7 +75,7 @@
                                         ${item.getBrandUrl()}
                                     </td>                                                                    
                                     <td class="text-center">
-                                        Date
+                                        ${item.getCreatedDate()}
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-primary"
@@ -105,107 +105,115 @@
             </div>
         </div>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="<c:url value="/assets/jquery.validate.min.js"/>"></script>
         <script src="<c:url value="/assets/admin/plugins/datatables/jquery.dataTables.min.js"/>"></script>
         <script src="<c:url value="/assets/admin/plugins/datatables/dataTables.bootstrap4.min.js"/>"></script>
         <script src="<c:url value="/assets/admin/plugins/datatables/dataTables.responsive.min.js"/>"></script>
         <script src="<c:url value="/assets/admin/plugins/datatables/responsive.bootstrap4.min.js"/>"></script>
         <script type="text/javascript">
-            function slugify(text) {
-                return text.toString().toLowerCase()
-                        .replace(/\s+/g, '-')           // Replace spaces with -
-                        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                        .replace(/^-+/, '')             // Trim - from start of text
-                        .replace(/-+$/, '');            // Trim - from end of text
-            }
+                                                    function slugify(text) {
+                                                        return text.toString().toLowerCase()
+                                                                .replace(/\s+/g, '-')           // Replace spaces with -
+                                                                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                                                                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                                                                .replace(/^-+/, '')             // Trim - from start of text
+                                                                .replace(/-+$/, '');            // Trim - from end of text
+                                                    }
 
-            function DeleteItem(id) {
-                swal({
-                    title: `DELETE item with id: ${id}?`,
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            type: "post",
-                            url: `@Url.Action("DeleteBrand", "Brand")`,
-                            data: "id=" + id,
-                            success: function (response) {
-                                if (response.Success == 1) {
-                                    swal("Deleted!", "", "success")
-                                            .then((value) => {
-                                                location.reload();
-                                            });
-                                } else {
-                                    swal("Delete fail!", "", "error");
-                                }
-                            },
-                            error: function (error) {
-                                swal("Delete fail!", "", "error");
-                            }
-                        });
-                    }
-                });
-            };
+                                                    function DeleteItem(id) {
+                                                        swal({
+                                                            title: "DELETE item with id: " + id + "?",
+                                                            icon: "warning",
+                                                            buttons: true,
+                                                            dangerMode: true,
+                                                        })
+                                                                .then((willDelete) => {
+                                                                    if (willDelete) {
+                                                                        $.ajax({
+                                                                            type: "post",
+                                                                            url: "123",
+                                                                            data: "id=" + id,
+                                                                            success: function (response) {
+                                                                                if (response.Success == 1) {
+                                                                                    swal("Deleted!", "", "success")
+                                                                                            .then((value) => {
+                                                                                                location.reload();
+                                                                                            });
+                                                                                } else {
+                                                                                    swal("Delete fail!", "", "error");
+                                                                                }
+                                                                            },
+                                                                            error: function (error) {
+                                                                                swal("Delete fail!", "", "error");
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                });
+                                                    }
+                                                    ;
 
-            function SaveEdit(id) {
-                swal({
-                    title: `EDIT item with id: ${id}?`,
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            type: "post",
-                            url: `@Url.Action("EditBrand", "Brand")`,
-                            data: {
-                                "id": id,
-                                "BrandName": $(`#cate-${id}`).val()
-                            },
-                            success: function (response) {
-                                if (response.Success == 1) {
-                                    swal("Edit!", "", "success")
-                                            .then((value) => {
-                                                location.reload();
-                                            });
-                                } else {
-                                    swal("Edit fail!", "", "error");
-                                }
-                            },
-                            error: function (error) {
-                                swal("Edit fail!", "", "error");
-                            }
-                        });
-                    }
-                });
-            };
+                                                    function SaveEdit(id) {
+                                                        swal({
+                                                            title: "EDIT item with id:" + id + "?",
+                                                            icon: "warning",
+                                                            buttons: true,
+                                                            dangerMode: true,
+                                                        })
+                                                                .then((willDelete) => {
+                                                                    if (willDelete) {
+                                                                        $.ajax({
+                                                                            type: "post",
+                                                                            url: `123123`,
+                                                                            data: {
+                                                                                "id": id,
+                                                                                "BrandName": $("#cate-" + id).val()
+                                                                            },
+                                                                            success: function (response) {
+                                                                                if (response.Success == 1) {
+                                                                                    swal("Edit!", "", "success")
+                                                                                            .then((value) => {
+                                                                                                location.reload();
+                                                                                            });
+                                                                                } else {
+                                                                                    swal("Edit fail!", "", "error");
+                                                                                }
+                                                                            },
+                                                                            error: function (error) {
+                                                                                swal("Edit fail!", "", "error");
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                });
+                                                    }
+                                                    ;
 
-            function EditItem(id) {
-                $("#edit-"+id).toggleClass('active');
+                                                    function EditItem(id) {
+                                                        $("#edit-" + id).toggleClass('active');
 
-                if ($("#edit-"+id).hasClass('active')) {
-                    $("#delete-"+id).hide();
-                    $("#save-"+id).show();
+                                                        if ($("#edit-" + id).hasClass('active')) {
+                                                            $("#delete-" + id).hide();
+                                                            $("#save-" + id).show();
 
-                    $("#brand-"+id+"-input").show();
-                    $("#brand-"+id+"-text").hide();
+                                                            $("#brand-" + id + "-input").show();
+                                                            $("#brand-" + id + "-text").hide();
 
-                    $("#brand-"+id).removeAttr('readonly');
+                                                            $("#brand-" + id).removeAttr('readonly');
 
-                } else {
-                    $("#delete-"+id).show();
-                    $("#save-"+id).hide();
+                                                        } else {
+                                                            $("#delete-" + id).show();
+                                                            $("#save-" + id).hide();
 
-                    $("#brand-"+id+"-input").hide();
-                    $("#brand-"+id+"-text").show();
+                                                            $("#brand-" + id + "-input").hide();
+                                                            $("#brand-" + id + "-text").show();
 
-                    $("#brand-"+id).prop('readonly', 'true');
-                };
-            };
+                                                            $("#brand-" + id).prop('readonly', 'true');
+                                                        }
+                                                        ;
+                                                    }
+                                                    ;
+
+        </script>
+        <script type="text/javascript">
             $(document).ready(function () {
                 $(".brand-input").each(function () {
                     $(this).hide();
@@ -213,13 +221,44 @@
                 $(".save-btn").each(function () {
                     $(this).hide();
                 });
-                
-                $(function () {
-                    $('#category-table').DataTable();
+
+                $('#category-table').DataTable();
+
+                $("input[name=brand-input]").on('input', function (e) {
+                    $("#brand-url").text(slugify($("input[name=brand-input]").val()));
                 });
 
-                $("input[name=BrandName]").on('input', function (e) {
-                    $("#brand-url").text(slugify($("input[name=BrandName]").val()));
+                $("#brand-submit-form").validate({
+                    rules: {
+                        'brand-input': "required"
+                    },
+                    messages: {
+                        'brand-input': "Please enter brand name!"
+                    },
+                    submitHandler: function () {
+                        $("#create-btn").prop("disabled", true);
+
+                        $.ajax({
+                            url: "<c:url value="path-to/hosting/save" />",
+                            type: "POST",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: {
+                                "brand-input": $("#brand-input").val()
+                            },
+                            success: function (data) {
+                                console.log(data);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                swal({
+                                    title: "Error ",
+                                    icon: "warning"
+                                });
+                            }, complete: function (jqXHR, textStatus) {
+                                $("#create-btn").prop("disabled", false);
+                            }
+                        });
+                    }
                 });
             });
         </script>

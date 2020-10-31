@@ -3,6 +3,7 @@ package com.spring.dao;
 import com.spring.dbcontext.DbContext;
 import com.spring.entity.Brand;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,8 +25,9 @@ public class BrandDAO {
                 int id = rs.getInt("BrandID");
                 String name = rs.getString("BrandName");
                 String url = rs.getString("BrandUrl");
+                Date date = rs.getDate("CreatedDate");
 
-                list.add(new Brand(id, name, url));
+                list.add(new Brand(id, name, url, date));
             }
             return list;
 

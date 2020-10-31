@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="tag" uri="/WEB-INF/taglib/client/pagination.tld" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,6 +10,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/loading-spinner.css'/>">
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/jquery-ui.css'/>">
 
+        <c:set value="${productlist}" var="productPageList" />
         <div class="breadcrumb-area pt-255 pb-170" style="background-image: url()">
             <div class="container-fluid">
                 <div class="breadcrumb-content text-center">
@@ -76,17 +76,113 @@
                         <div class="grid-list-product-wrapper tab-content">
                             <div class="product-grid product-view tab-pane active">
                                 <div class="row" id="product-content">
+                                    <c:forEach items="${productPageList.pageList}" var="item">
+                                        <div class="product-width col-md-4 col-xl-3 col-lg-4">
+                                            <div class="product-wrapper mb-35">
+                                                <div class="product-img">
+                                                    <a href="#">
+                                                        <img src="${item.getProductImage()}" alt="${item.getProductName()}">
+                                                    </a>
+                                                    <div class="product-action">
+                                                        <a class="action-plus-2 p-action-none" title="Thêm vào giỏ hàng"
+                                                           href="#">
+                                                            <i class="ti-shopping-cart"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-content-wrapper">
+                                                        <div class="product-title-spreed">
+                                                            <h4>
+                                                                <a href="#">
+                                                                    ${item.getProductName()}
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div class="product-price">
+                                                            <c:choose>
+                                                                <c:when test="${empty item.getPromotionPrice()}">
+                                                                    <span>${item.getProductPrice()}₫</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <span>${item.getPromotionPrice()}₫</span>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-list-details">
+                                                    <h2>
+                                                        <a href="#">
+                                                            ${item.getProductName()}
+                                                        </a>
+                                                    </h2>
+                                                    <div class="quick-view-rating">
+                                                        <i class="fa fa-star reting-color"></i>
+                                                        <i class="fa fa-star reting-color"></i>
+                                                        <i class="fa fa-star reting-color"></i>
+                                                        <i class="fa fa-star reting-color"></i>
+                                                        <i class="fa fa-star reting-color"></i>
+                                                    </div>
+                                                    <div class="product-price">
+                                                        <c:choose>
+                                                            <c:when test="${empty item.getPromotionPrice()}">
+                                                                <span>${item.getProductPrice()}₫</span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span>${item.getPromotionPrice()}₫</span>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </div>
+                                                    <p>${item.getProductDescription()}</p>
+                                                    <div class="shop-list-cart">
+                                                        <a href="#"><i class="ti-shopping-cart"></i> Add to cart</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
                                 </div>
-                                <div class="loader" id="loader">
-                                    <svg class="circular">
-                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
-                                    </svg>
-                                </div>
+                                <!--                            <div class="loader" id="loader">
+                                                                <svg class="circular">
+                                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
+                                                                </svg>
+                                                            </div>-->
                             </div>
                         </div>
-                        <!--Load Btn-->
+                        <!--Pagin Btn-->
                         <div class="paginations text-center mt-20">
-                            <tag:paginate max="10" offset="${offset}" uri="/shop" count="${count}" next="&raquo;" previous="&laquo;" />
+                            <nav>
+                                <ul class="pagination">
+                                    <c:choose>
+                                        <c:when test="${productPageList.firstPage}">
+                                            <li>Prev</li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="/shop/prev" var="url" />                  
+                                            <a href='<c:out value="${url}" />'>Prev</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:forEach begin="1" end="${productPageList.pageCount}" step="1"  varStatus="tagStatus">
+                                        <c:choose>
+                                            <c:when test="${(productPageList.page + 1) == tagStatus.index}">
+                                                <li>${tagStatus.index}</li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:url value="/shop/${tagStatus.index}" var="url" />                  
+                                                <a href='<c:out value="${url}" />'>${tagStatus.index}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${productPageList.lastPage}">
+                                            <li>Next</li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="/shop/next" var="url" />                  
+                                            <a href='<c:out value="${url}" />'>Next</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -106,6 +202,7 @@
                     contentType: "application/json",
                     dataType: "json",
                     success: function (data) {
+                        console.log(data);
                         $("#loader").hide();
                         for (var i = 0; i < data.length; i++) {
                             //createProduct(data[i]);
