@@ -19,8 +19,8 @@ public class ProductController {
 
     @RequestMapping(value = {"shop", "shop/{page}"}, method = RequestMethod.GET)
     public ModelAndView Shop(@PathVariable(required = false, name = "page") String page, HttpServletRequest req, HttpServletResponse res) {
-       int pageSize = 10;
-        
+        int pageSize = 12;
+
         ModelAndView mv = new ModelAndView("client/shop");
         PagedListHolder<Product> productlist;
         if (page == null) {
@@ -29,18 +29,12 @@ public class ProductController {
             productlist.setSource(productList);
             productlist.setPageSize(pageSize);
             req.getSession().setAttribute("productlist", productlist);
-        } else if (page.equals("prev")) {
-            productlist = (PagedListHolder<Product>) req.getSession().getAttribute("productlist");
-            productlist.previousPage();
-        } else if (page.equals("next")) {
-            productlist = (PagedListHolder<Product>) req.getSession().getAttribute("productlist");
-            productlist.nextPage();
         } else {
             int pageNum = Integer.parseInt(page);
             productlist = (PagedListHolder<Product>) req.getSession().getAttribute("productlist");
             productlist.setPage(pageNum - 1);
         }
-        
+
         return mv;
     }
 
@@ -49,5 +43,11 @@ public class ProductController {
     String ProductData() {
         return new Gson().toJson(new ProductDAO().GetData());
         //return list;
+    }
+
+    @RequestMapping(value = "product/{url}/{id}", method = RequestMethod.GET)
+    public ModelAndView Detail(@PathVariable(name = "url") String url, @PathVariable(name = "id") int id) {
+
+        return new ModelAndView("client/productdetail", "product", new ProductDAO().GetDataByID(id));
     }
 }

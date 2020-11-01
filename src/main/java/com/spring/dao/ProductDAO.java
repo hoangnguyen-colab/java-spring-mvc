@@ -39,6 +39,37 @@ public class ProductDAO {
             return null;
         }
     }
+    
+    public Product GetDataByID(int productid){
+        Connection conn = DbContext.getConnection();
+        try {
+            List<Product> list = new ArrayList<>();
+            String query = "SELECT * FROM PRODUCT WHERE PRODUCT.ProductID = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, productid);
+            Product prod = new Product();
+            
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                prod.setProductID(rs.getInt("ProductID"));
+                prod.setProductName(rs.getString("ProductName"));
+                prod.setProductDescription(rs.getString("ProductDescription"));
+                prod.setProductPrice(rs.getBigDecimal("ProductPrice"));
+                prod.setPromotionPrice(rs.getBigDecimal("PromotionPrice"));
+                prod.setProductImage(rs.getString("ProductImage"));
+                prod.setProductURL(rs.getString("ProductURL"));
+                prod.setRating(rs.getInt("Rating"));
+                prod.setViewcount(rs.getInt("Viewcount"));
+                prod.setProductStock(rs.getInt("ProductStock"));
+                prod.setCreatedDate(rs.getDate("CreatedDate"));
+                prod.setBrandID(rs.getInt("BrandID"));
+            }
+            return prod;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     public List<Product> GetData(int offset, int max) {
         Connection conn = DbContext.getConnection();
