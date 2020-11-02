@@ -63,6 +63,8 @@ public class ProductDAO {
                 prod.setProductStock(rs.getInt("ProductStock"));
                 prod.setCreatedDate(rs.getDate("CreatedDate"));
                 prod.setBrandID(rs.getInt("BrandID"));
+                
+                break;
             }
             return prod;
 

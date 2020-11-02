@@ -5,13 +5,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Trang Chu</title>
+        <title>Trang Chủ</title>
     </head>
     <body>
         <div class="blog-area pt-150 pb-110">
             <div class="container">
                 <div class="section-title text-center mb-60">
-                    <h2 style="font-size:70px;">???c Xem Nhi?u</h2>
+                    <h2 style="font-size:70px;">Được Xem Nhiều</h2>
                 </div>
                 <div class="row" id="top-view-product">
                 </div>
@@ -21,7 +21,7 @@
         <div class="blog-area pt-150 pb-110">
             <div class="container">
                 <div class="section-title text-center mb-60">
-                    <h2 style="font-size:70px;">S?n ph?m m?i nh?t</h2style="font-size:70px;">
+                    <h2 style="font-size:70px;">Sản phẩm mới nhất</h2style="font-size:70px;">
                 </div>
                 <div class="row" id="newest-product">
                 </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <div class="overview-img">
-                            <img class="tilter" src="~/Assets/img/banner/banner.jpg" alt="">
+                            <img class="tilter" src="<c:url value="assets/client/img/banner/banner.jpg" />" alt="">
                         </div>
                     </div>
                 </div>

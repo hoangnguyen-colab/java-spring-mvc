@@ -1,5 +1,6 @@
 package com.spring.dao;
 
+import com.spring.common.CommonFunction;
 import com.spring.dbcontext.DbContext;
 import com.spring.entity.Brand;
 import java.sql.Connection;
@@ -36,25 +37,23 @@ public class BrandDAO {
         }
     }
 
-    public boolean InsertData(Brand brand) {
+    public int InsertData(String name) {
         Connection conn = DbContext.getConnection();
         try {
-            String sql = "INSERT INTO dbo.Brand (id, ten, Class, Age, Sex) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO dbo.Brand (BrandName, BrandUrl, CreatedDate) VALUES (?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setInt(1, brand.getBrandID());
-            statement.setString(2, brand.getBrandName());
-            statement.setString(3, brand.getBrandUrl());
-            statement.setDate(4, java.sql.Date.valueOf(java.time.LocalDate.now()));
+            statement.setString(1, name);
+            statement.setString(2, CommonFunction.toSlug(name));
+            statement.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
 
             int rs = statement.executeUpdate();
-            if (rs == 1) {
-                return true;
-            }
+            
+            return rs;
 
         } catch (SQLException e) {
-            return false;
+            return 0;
         }
-        return false;
     }
+    
+    
 }

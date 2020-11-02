@@ -22,11 +22,17 @@ public class BrandController {
         return new ModelAndView("admin/brandhome", "brandlist", new BrandDAO().GetData());
     }
 
-    @RequestMapping(value = "admin/brand/submitcreate", method = RequestMethod.POST, headers = "Accept=*/*", produces = "application/json")
+    @RequestMapping(value = "admin/brand/submitcreate", method = RequestMethod.GET)
     @ResponseBody
-    public String SubmitCreate(@RequestParam("brand-input") String name) {
+    public String SubmitCreate(String BrandName) {
+        int result = new BrandDAO().InsertData(BrandName);
+        if (result == 1) {
 
-        return new Gson().toJson(name);
+            return new Gson().toJson("Success");
+        } else {
+            return new Gson().toJson("Fail");
+        }
+
         //return list;
     }
 

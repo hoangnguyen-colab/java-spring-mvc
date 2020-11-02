@@ -10,7 +10,7 @@ public class MenuHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest hsr, HttpServletResponse hsr1, Object o) throws Exception {
-        hsr.setAttribute("list", new BrandDAO().GetData());
+        hsr.setAttribute("menu", new BrandDAO().GetData());
         return true;
     }
 

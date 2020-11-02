@@ -8,7 +8,7 @@
                     <div class="footer-widget mb-30">
                         <div class="footer-logo">
                             <a href="#">
-                                <img src="<c:url value='/assets/client/img/logo/logo-Copy.png'/>" alt="">
+                                <img src="<c:url value='assets/client/img/logo/logo-1.png'/>" alt="logo">
                             </a>
                         </div>
                         <div class="footer-about">

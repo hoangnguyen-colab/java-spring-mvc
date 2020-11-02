@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/loading-spinner.css'/>">
 
         <c:set value="${productlist}" var="productPageList" />
-        <div class="breadcrumb-area pt-255 pb-170" style="background-image: url()">
+        <div class="breadcrumb-area pt-255 pb-170" style="background-image: url(https://www.klaviyo.com/wp-content/uploads/2016/09/abstract-background-1024x273.jpg)">
             <div class="container-fluid">
                 <div class="breadcrumb-content text-center">
                     <h2>cửa hàng</h2>
@@ -80,7 +80,7 @@
                                         <div class="product-width col-md-4 col-xl-3 col-lg-4">
                                             <div class="product-wrapper mb-35">
                                                 <div class="product-img">
-                                                    <a href="<c:url value="product/${item.getProductURL()}/${item.getProductID()}"/>">
+                                                    <a href="<c:url value="/product/${item.getProductURL()}/${item.getProductID()}"/>">
                                                         <img src="${item.getProductImage()}" alt="${item.getProductName()}">
                                                     </a>
                                                     <div class="product-action">
@@ -92,7 +92,7 @@
                                                     <div class="product-content-wrapper">
                                                         <div class="product-title-spreed">
                                                             <h4>
-                                                                <a href="<c:url value="product/${item.getProductURL()}/${item.getProductID()}"/>">
+                                                                <a href="<c:url value="/product/${item.getProductURL()}/${item.getProductID()}"/>">
                                                                     ${item.getProductName()}
                                                                 </a>
                                                             </h4>
@@ -119,7 +119,7 @@
                                                 </div>
                                                 <div class="product-list-details">
                                                     <h2>
-                                                        <a href="<c:url value="product/${item.getProductURL()}/${item.getProductID()}"/>">
+                                                        <a href="<c:url value="/product/${item.getProductURL()}/${item.getProductID()}"/>">
                                                             ${item.getProductName()}
                                                         </a>
                                                     </h2>
@@ -189,17 +189,6 @@
                 let search = "@ViewBag.search";
                 let sort = "@ViewBag.sort";
                 
-                $.post("123123",
-                        {
-                            "search": search,
-                            "sort": sort,
-                            "pageindex": pageindex
-                        },
-                        function (data) {
-                            $("#product-content").append(data);
-                            $("#loader").hide();
-                        }
-                );
                 $("#sort-filter").on('change', function (event) {
                     let url =
                             '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
@@ -207,6 +196,7 @@
                     url = url.replace("sort-value", this.value);
                     window.location.href = url;
                 });
+                
                 $("#search-product").autocomplete({
                     source: function (request, response) {
                         $.ajax({
@@ -222,20 +212,6 @@
                         });
                     },
                     minLength: 2
-                });
-                $("#load-more").click(function () {
-                    $("#loader").show();
-                    pageindex += 1;
-                    $.post("123123",
-                            {
-                                "search": search,
-                                "sort": sort,
-                                "pageindex": pageindex
-                            },
-                            function (data) {
-                                $("#product-content").append(data);
-                                $("#loader").hide();
-                            });
                 });
             });
         </script>

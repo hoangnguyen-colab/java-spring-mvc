@@ -239,12 +239,12 @@
                         $("#create-btn").prop("disabled", true);
 
                         $.ajax({
-                            url: "<c:url value="path-to/hosting/save" />",
-                            type: "POST",
+                            url: "<c:url value="/admin/brand/submitcreate" />",
+                            type: "get",
                             contentType: "application/json",
                             dataType: "json",
                             data: {
-                                "brand-input": $("#brand-input").val()
+                                "BrandName": $("#brand-input").val()
                             },
                             success: function (data) {
                                 console.log(data);

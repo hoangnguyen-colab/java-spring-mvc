@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-4">
                     <div class="logo-small-device">
-                        <a href="<c:url value="/" />"><img alt="" src="<c:url value='/assets/client/img/logo/logo-1.png'/>"></a>
+                        <a href="<c:url value="/" />"><img alt="logo" src="<c:url value='/assets/client/img/logo/logo-1.png'/>"></a>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-8">
@@ -17,8 +17,8 @@
                         </div>
                         <div class="menu-wrapper text-center">
                             <button class="menu-toggle">
-                                <img class="s-open" alt="" src="<c:url value='assets/client/img/icon-img/menu.png'/>">
-                                <img class="s-close" alt="" src="<c:url value='assets/client/img/icon-img/menu-close.png'/>">
+                                <img class="s-open" alt="menu" src="<c:url value='/assets/client/img/icon-img/menu.png'/>">
+                                <img class="s-close" alt="menu-close" src="<c:url value='/assets/client/img/icon-img/menu-close.png'/>">
                             </button>
                             <div class="main-menu">
                                 <nav>

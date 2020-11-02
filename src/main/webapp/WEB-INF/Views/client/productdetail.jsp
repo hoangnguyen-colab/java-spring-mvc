@@ -8,7 +8,7 @@
         <title>${product.getProductName()}</title>
     </head>
     <body>
-        <div class="breadcrumb-area pt-255 pb-170" style="background-image: url()">
+        <div class="breadcrumb-area pt-255 pb-170" style="background-image: url(https://www.klaviyo.com/wp-content/uploads/2016/09/abstract-background-1024x273.jpg)">
             <div class="container-fluid">
                 <div class="breadcrumb-content text-center">
                     <h2>${product.getProductName()}</h2>
