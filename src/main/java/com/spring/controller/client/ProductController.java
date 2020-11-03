@@ -19,7 +19,7 @@ public class ProductController {
 
     @RequestMapping(value = {"shop", "shop/{page}"}, method = RequestMethod.GET)
     public ModelAndView Shop(@PathVariable(required = false, name = "page") String page, HttpServletRequest req, HttpServletResponse res) {
-        int pageSize = 12;
+        int pageSize = 6;
 
         ModelAndView mv = new ModelAndView("client/shop");
         PagedListHolder<Product> productlist;

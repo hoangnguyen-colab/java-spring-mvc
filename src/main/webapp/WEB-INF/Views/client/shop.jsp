@@ -166,12 +166,12 @@
                             </div>
                         </div>
                         <!--Pagin Btn-->
-                        <div class="paginations text-center mt-20 text-center">
-                            <ul class="pagination">
+                        <div class="paginations text-center mt-20">
+                            <ul>
                                 <c:forEach begin="1" end="${productPageList.pageCount}" step="1"  varStatus="tagStatus">
                                     <c:choose>
                                         <c:when test="${(productPageList.page + 1) == tagStatus.index}">
-                                            <li ><a class="disabled" href="javascript:void(0);">${tagStatus.index}</a></li>
+                                            <li ><a class="disabled" href="#">${tagStatus.index}</a></li>
                                             </c:when>
                                             <c:otherwise>
                                                 <c:url value="/shop/${tagStatus.index}" var="url" />                  
