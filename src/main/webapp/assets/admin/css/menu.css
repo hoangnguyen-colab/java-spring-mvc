@@ -15,7 +15,7 @@ Author:
 .side-navigation > li.active > a,
 .side-navigation > li.active > a:hover,
 .side-navigation > li.active > a:focus {
-  background-color: rgba(255,255,255,0.07); !important;
+  background-color: rgba(255,255,255,0.07);
   border-radius: 3px;
 }
 .sidebar-left .nav > li > a:hover,

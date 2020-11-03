@@ -31,11 +31,16 @@
                                             </ul>
                                         </li>
                                         <li class="active">
-                                            <a href="<c:url value="about" />">về tôi</a>
+                                            <a href="<c:url value="/about" />">về tôi</a>
                                         </li>
-                                        <li><a href="<c:url value="contact" />">liên hệ</a></li>
                                         <li>
-                                            <a href="<c:url value="login" />">đăng nhập</a>
+                                            <a href="<c:url value="/contact" />">liên hệ</a>
+                                        </li>
+                                        <li>
+                                            <a href="<c:url value="/cart" />">giỏ hàng</a>
+                                        </li>
+                                        <li>
+                                            <a href="<c:url value="/login" />">đăng nhập</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -43,6 +48,7 @@
                         </div>
                     </div>
                     <div class="header-cart cart-small-device cart-partial">
+                        <%@ include file="/common/client/partialview/cart.jsp" %>
                     </div>
                 </div>
                 <!--Mobile-->
@@ -76,6 +82,7 @@
         </div>
         <div class="header-cart-wrapper">
             <div class="header-cart cart-partial">
+                <%@ include file="/common/client/partialview/cart.jsp" %>
             </div>
         </div>
     </div>

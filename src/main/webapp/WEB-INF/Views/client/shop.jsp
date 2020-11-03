@@ -8,6 +8,12 @@
         <title>Shop</title>
     </head>
     <body>
+        <style type="text/css">
+            a.disabled {
+                pointer-events: none;
+                cursor: default;
+            }
+        </style>
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/loading-spinner.css'/>">
 
         <c:set value="${productlist}" var="productPageList" />
@@ -165,7 +171,7 @@
                                 <c:forEach begin="1" end="${productPageList.pageCount}" step="1"  varStatus="tagStatus">
                                     <c:choose>
                                         <c:when test="${(productPageList.page + 1) == tagStatus.index}">
-                                            <li><a href="javascript:void(0);">${tagStatus.index}</a></li>
+                                            <li ><a class="disabled" href="javascript:void(0);">${tagStatus.index}</a></li>
                                             </c:when>
                                             <c:otherwise>
                                                 <c:url value="/shop/${tagStatus.index}" var="url" />                  
@@ -188,7 +194,7 @@
             $(document).ready(function () {
                 let search = "@ViewBag.search";
                 let sort = "@ViewBag.sort";
-                
+
                 $("#sort-filter").on('change', function (event) {
                     let url =
                             '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
@@ -196,7 +202,7 @@
                     url = url.replace("sort-value", this.value);
                     window.location.href = url;
                 });
-                
+
                 $("#search-product").autocomplete({
                     source: function (request, response) {
                         $.ajax({

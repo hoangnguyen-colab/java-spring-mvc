@@ -21,7 +21,7 @@
         <div class="blog-area pt-150 pb-110">
             <div class="container">
                 <div class="section-title text-center mb-60">
-                    <h2 style="font-size:70px;">Sản phẩm mới nhất</h2style="font-size:70px;">
+                    <h2 style="font-size:70px;">Sản phẩm mới nhất</h2>
                 </div>
                 <div class="row" id="newest-product">
                 </div>

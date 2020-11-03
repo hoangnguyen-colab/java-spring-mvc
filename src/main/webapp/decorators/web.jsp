@@ -59,6 +59,9 @@
 //
 //                    $('#covid-table').DataTable()
 //                });
+//                $(".icon-cart").on("click", function () {
+//                    $(this).parent().find('.shopping-cart-content').slideToggle('medium');
+//                });
             });
         </script>
         <script type="text/javascript">
