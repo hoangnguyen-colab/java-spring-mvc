@@ -35,14 +35,14 @@
                                     <div class="tab-pane active" id="pro-details1">
                                         <div class="easyzoom easyzoom--overlay">
                                             <a href="javascript:void(0);">
-                                                <img src="${product.getProductImage()}" alt="">
+                                                <img src="${product.getProductImage()}" alt="${product.getProductImage()}">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="product-details-small nav mt-12 product-dec-slider owl-carousel">
                                     <a class="active" href="#pro-details1">
-                                        <img src="${product.getProductImage()}" alt="">
+                                        <img src="${product.getProductImage()}" alt="${product.getProductImage()}">
                                     </a>
                                 </div>
                             </div>
@@ -67,8 +67,8 @@
                                                               maxFractionDigits = "3" 
                                                               value = "${item.getProductPrice()}" />₫
                                         </span>
-                                        </c:when>
-                                        <c:otherwise>
+                                    </c:when>
+                                    <c:otherwise>
                                         <div class="original-price">
                                             <fmt:formatNumber type = "number" 
                                                               maxFractionDigits = "3" 
@@ -80,17 +80,6 @@
                                                               value = "${product.getProductPrice()}" />₫
                                         </c:otherwise>
                                     </c:choose>
-                                    <!--                                @if (Model.PromotionPrice.HasValue)
-                                                                    {
-                                                                    <div class="original-price">@Model.PromotionPrice.Value.ToString("#,##0")₫</div>
-                                                                    <div class="discount-price">
-                                                                        @Model.ProductPrice.ToString("#,##0")₫
-                                                                    </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                    <span class="original-price">@Model.ProductPrice.ToString("#,##0")₫</span>
-                                                                    }-->
                                 </div>
                                 <div class="product-overview">
                                     <h5 class="pd-sub-title">Tổng quan</h5>
@@ -137,5 +126,41 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $("#submit-btn").click(function () {
+                    event.preventDefault();
+                    let prodid = ${product.getProductID()};
+                    let quantity = $("#quantity-input").val();
+
+                    $.ajax({
+                        url: "<c:url value="/cart/addtocart" />",
+                        type: "get",
+                        data: {
+                            prodid: prodid,
+                            quantity: quantity
+                        },
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log(data);
+                            if (data.Status == true) {
+                                swal("Success", "Add to cart success!", "success")
+                                        .then((value) => {
+                                            location.reload();
+                                        });
+                            } else {
+                                swal("Failed", data.message, "error");
+                            }
+                        },
+                        error: function (response) {
+                            swal("Failed", "Add to cart failed!", "error");
+                        }
+                    });
+                });
+            });
+        </script>        
     </body>
 </html>

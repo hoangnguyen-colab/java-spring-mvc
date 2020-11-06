@@ -90,8 +90,8 @@
                                                         <img src="${item.getProductImage()}" alt="${item.getProductName()}">
                                                     </a>
                                                     <div class="product-action">
-                                                        <a class="action-plus-2 p-action-none" title="Thêm vào giỏ hàng"
-                                                           href="#">
+                                                        <a class="action-plus-2 p-action-none addtocart" title="Thêm vào giỏ hàng"
+                                                           href="javascript:void(0);" data-value="${item.getProductID()}">
                                                             <i class="ti-shopping-cart"></i>
                                                         </a>
                                                     </div>
@@ -156,7 +156,7 @@
                                                     </div>
                                                     <p>${item.getProductDescription()}</p>
                                                     <div class="shop-list-cart">
-                                                        <a href="#"><i class="ti-shopping-cart"></i> Add to cart</a>
+                                                        <a class="addtocart" href="javascript:void(0);" data-value="${item.getProductID()}"><i class="ti-shopping-cart"></i> Add to cart</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -192,33 +192,64 @@
         <script src="<c:url value="/assets/client/js/jquery-ui.js"/>"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                let search = "@ViewBag.search";
-                let sort = "@ViewBag.sort";
-
-                $("#sort-filter").on('change', function (event) {
-                    let url =
-                            '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
-                    url = url.replace("search-value", search);
-                    url = url.replace("sort-value", this.value);
-                    window.location.href = url;
-                });
-
-                $("#search-product").autocomplete({
-                    source: function (request, response) {
+                $(".addtocart").each(function () {
+                    $(this).click(function (event) {
+                        event.preventDefault();
+                        var prodid = $(this).data("value");
                         $.ajax({
-                            url: "123123",
-                            type: "POST",
+                            url: "<c:url value="/cart/addtocart" />",
+                            type: "get",
+                            data: {
+                                prodid: prodid,
+                                quantity: "1"
+                            },
                             dataType: "json",
-                            data: {prefix: request.term},
+                            contentType: "application/json",
                             success: function (data) {
-                                response($.map(data.name, function (item) {
-                                    return {label: item.ProductName, value: item.ProductName};
-                                }));
+                                console.log(data);
+                                if (data.Status == true) {
+                                    swal("Success", "Add to cart success!", "success")
+                                            .then((value) => {
+                                                location.reload();
+                                            });
+                                } else {
+                                    swal("Failed", data.message, "error");
+                                }
+                            },
+                            error: function (response) {
+                                swal("Failed", "Add to cart failed!", "error");
                             }
                         });
-                    },
-                    minLength: 2
+                    })
                 });
+
+//                let search = "@ViewBag.search";
+//                let sort = "@ViewBag.sort";
+//
+//                $("#sort-filter").on('change', function (event) {
+//                    let url =
+//                            '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
+//                    url = url.replace("search-value", search);
+//                    url = url.replace("sort-value", this.value);
+//                    window.location.href = url;
+//                });
+//
+//                $("#search-product").autocomplete({
+//                    source: function (request, response) {
+//                        $.ajax({
+//                            url: "123123",
+//                            type: "POST",
+//                            dataType: "json",
+//                            data: {prefix: request.term},
+//                            success: function (data) {
+//                                response($.map(data.name, function (item) {
+//                                    return {label: item.ProductName, value: item.ProductName};
+//                                }));
+//                            }
+//                        });
+//                    },
+//                    minLength: 2
+//                });
             });
         </script>
 

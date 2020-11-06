@@ -1,21 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:choose>
+    <c:when test="${empty sessionScope.cartlist}">
+        <div style="overflow-y: scroll;">
+            <button class="icon-cart">
+                <i class="ti-shopping-cart"></i>
+                <span class="count-style">0</span>
+                <span class="count-price-add">Giỏ hàng</span>
+            </button>
+            <div class="shopping-cart-content">
 
-<div style="overflow-y: scroll;">
-    <button class="icon-cart">
-        <i class="ti-shopping-cart"></i>
-        <span id="123qwe" class="count-style">@quantity</span>
-        <span class="count-price-add">Giỏ hàng</span>
-    </button>
-    <div class="shopping-cart-content">
-        <c:choose>
-            <c:when test="${empty sessionScope.cartlist}">
                 <h2 class="text-center">Giỏ Hàng Trống</h2>
                 <div class="shopping-cart-btn">
-                    <a class="btn-style cr-btn" href="<c:url value="/shop"/>)">bắt đầu mua hàng</a>
+                    <a class="btn-style cr-btn" href="<c:url value="/shop"/>">bắt đầu mua hàng</a>
                 </div>
-            </c:when>
-            <c:otherwise>
+            </div>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <c:set var="total" value="${0}"/>
+        <c:forEach var="item" items="${sessionScope.cartlist}">
+            <c:set var="total" value="${total + item.quantity}" />
+        </c:forEach>
+        <div style="overflow-y: scroll;">
+            <button class="icon-cart">
+                <i class="ti-shopping-cart"></i>
+                <span class="count-style">${total}</span>
+                <span class="count-price-add">Giỏ hàng</span>
+            </button>
+            <div class="shopping-cart-content">
                 <ul>
                     <c:forEach var="item" items="${sessionScope.cartlist}">
                         <li class="single-shopping-cart">
@@ -52,7 +65,7 @@
                 </div>
                 <div class="shopping-cart-btn">
                 </div>
-            </c:otherwise>
-        </c:choose>
-    </div>
-</div>
+            </div>
+        </div>
+    </c:otherwise>
+</c:choose>

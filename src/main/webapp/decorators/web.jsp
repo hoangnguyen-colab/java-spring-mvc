@@ -22,6 +22,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/jquery-ui.css'/>">
         <script src="<c:url value='/assets/client/js/vendor/modernizr-2.8.3.min.js'/>"></script>
         <script src="<c:url value='/assets/client/js/vendor/jquery-1.12.0.min.js'/>"></script>
+        <script src="<c:url value='/assets/sweetalert.min.js'/>"></script>
     </head>
     <body>
         <div class="wrapper">

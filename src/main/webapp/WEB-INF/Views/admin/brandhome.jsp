@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="<c:url value='/assets/sweetalert.min.js'/>"></script>
         <script src="<c:url value="/assets/jquery.validate.min.js"/>"></script>
         <script src="<c:url value="/assets/admin/plugins/datatables/jquery.dataTables.min.js"/>"></script>
         <script src="<c:url value="/assets/admin/plugins/datatables/dataTables.bootstrap4.min.js"/>"></script>
