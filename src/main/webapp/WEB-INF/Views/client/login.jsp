@@ -51,7 +51,7 @@
                                                         <label>Ghi nhớ</label>
                                                         <a href="javascript:void(0)">Quên Mật Khẩu ?</a>
                                                     </div>
-                                                    <button type="submit" class="btn-style cr-btn">
+                                                    <button type="submit" class="btn-style cr-btn" id="login-btn">
                                                         <div class="loader" id="login-loader" style="max-height: 50px;">
                                                             <svg class="circular">
                                                             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
@@ -78,7 +78,7 @@
                                                 <input type="text" id="reg-address" name="reg-address" placeholder="Địa chỉ">
                                                 <div class="button-box">
                                                     <h5 class="text-danger info-register-text text-center"></h5>
-                                                    <button type="submit" class="btn-style cr-btn">
+                                                    <button type="submit" class="btn-style cr-btn" id="signup-btn">
                                                         <div class="loader" id="reg-loader" style="max-height: 50px;">
                                                             <svg class="circular">
                                                             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
@@ -103,7 +103,7 @@
             $(document).ready(function () {
                 $("#login-loader").hide();
                 $("#reg-loader").hide();
-                //--login form
+                
                 $("#login-form").validate({
                     rules: {
                         'log-name': "required",
@@ -120,6 +120,7 @@
                         },
                     },
                     submitHandler: function () {
+                        $("#login-btn").attr("disabled", true);
                         $("#login-loader").show();
                         $("#login-button-text").hide();
                         var data = {
@@ -138,8 +139,6 @@
                             contentType: "application/json",
                             success: function (response) {
                                 console.log(response);
-//                                $("#login-loader").hide();
-//                                $("#login-button-text").show();
 //                                if (response.Success) {
 //                                    $("#login-button-text").text("Login Success");
 //                                    let url = "123";
@@ -150,8 +149,12 @@
 //                                window.location.reload();
                             },
                             error: function (response) {
-                                $("#login-loader").hide();
                                 $("#login-button-text").text("Error while logging in!");
+                            },
+                            complete: function (jqXHR, textStatus) {
+                                $("#login-loader").hide();
+                                $("#login-button-text").show();
+                                $("#login-btn").attr("disabled", false);
                             }
                         });
                     }
@@ -189,6 +192,7 @@
                         }
                     },
                     submitHandler: function () {
+                        $("#signup-btn").attr("disabled", true);
                         $("#reg-loader").show();
                         $("#reg-button-text").hide();
                         var data = {
@@ -206,20 +210,20 @@
                             dataType: "json",
                             contentType: "application/json",
                             success: function (response) {
-                                $("#reg-loader").hide();
-                                $("#reg-button-text").show();
                                 if (response.ReturnID == 1)
                                     $("#reg-button-text").text("Create Success");
-                                window.location.reload();
                                 if (response.ReturnID == 0)
                                     $("#reg-button-text").text("Username has already exist");
                                 else if (response.ReturnID == 2)
                                     $("#reg-button-text").text("Create Fail");
                             },
                             error: function (response) {
+                                $("#reg-button-text").text("Error while register your account!");
+                            },
+                            complete: function (jqXHR, textStatus) {
                                 $("#reg-loader").hide();
                                 $("#reg-button-text").show();
-                                $("#reg-button-text").text("Error while register your account!");
+                                $("#signup-btn").attr("disabled", false);
                             }
                         });
                     }

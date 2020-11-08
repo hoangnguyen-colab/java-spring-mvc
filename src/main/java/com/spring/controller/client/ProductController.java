@@ -42,7 +42,6 @@ public class ProductController {
     public @ResponseBody
     String ProductData() {
         return new Gson().toJson(new ProductDAO().GetData());
-        //return list;
     }
 
     @RequestMapping(value = "product/{url}/{id}", method = RequestMethod.GET)

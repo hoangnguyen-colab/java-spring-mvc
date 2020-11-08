@@ -39,9 +39,28 @@
                                         <li>
                                             <a href="<c:url value="/cart" />">giỏ hàng</a>
                                         </li>
-                                        <li>
-                                            <a href="<c:url value="/login" />">đăng nhập</a>
-                                        </li>
+                                        <c:choose>
+                                            <c:when test="${empty sessionScope.customerLogin}">
+                                                <li>
+                                                    <a href="<c:url value="/login" />">đăng nhập</a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li>
+                                                    <a href="javascript:void(0);">
+                                                        Xin chào ${sessionScope.customerLogin.getCustomerName()}
+                                                    </a>
+                                                    <ul class="dropdown">
+                                                        <li>
+                                                            <a href="<c:url value="/customer/${sessionScope.customerLogin.getCustomerUsername()}" />">
+                                                                thông tin tài khoản
+                                                            </a>
+                                                        </li>
+                                                        <li><a href="<c:url value="/logout" />">đăng xuất</a></li>
+                                                    </ul>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </ul>
                                 </nav>
                             </div>
@@ -70,10 +89,28 @@
                                 <li>
                                     <a href="<c:url value="/cart" />">giỏ hàng</a>
                                 </li>
-                                <li>
-                                    <a href="<c:url value="/login" />">đăng nhập</a>
-                                </li>
-
+                                <c:choose>
+                                    <c:when test="${empty sessionScope.customerLogin}">
+                                        <li>
+                                            <a href="<c:url value="/login" />">đăng nhập</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>
+                                            <a href="javascript:void(0);">
+                                                Xin chào ${sessionScope.customerLogin.getCustomerName()}
+                                            </a>
+                                            <ul class="dropdown">
+                                                <li>
+                                                    <a href="<c:url value="/customer/${sessionScope.customerLogin.getCustomerUsername()}" />">
+                                                        thông tin tài khoản
+                                                    </a>
+                                                </li>
+                                                <li><a href="<c:url value="/logout" />">đăng xuất</a></li>
+                                            </ul>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
                             </ul>
                         </nav>
                     </div>
