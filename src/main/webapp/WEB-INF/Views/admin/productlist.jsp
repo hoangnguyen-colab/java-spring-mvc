@@ -19,7 +19,7 @@
         <div class="card-body">
             <h1 class="header-title">Product List</h1>
             <p class="text-muted">
-                <a href="/createproduct">Create New</a>
+                <a href="/admin/createproduct">Create New</a>
             </p>
 
             <table class="table table-bordered" id="product-table">

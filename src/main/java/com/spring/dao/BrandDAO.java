@@ -47,13 +47,48 @@ public class BrandDAO {
             statement.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
 
             int rs = statement.executeUpdate();
-            
+
             return rs;
 
         } catch (SQLException e) {
             return 0;
         }
     }
-    
-    
+
+    public boolean DeleteData(int id) {
+        Connection conn = DbContext.getConnection();
+        try {
+            String sql = " DELETE dbo.Brand Where BrandID=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            statement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public int EditData(int id, String BrandName) {
+        Connection conn = DbContext.getConnection();
+        try {
+            String sql = "UPDATE dbo.BRAND\n"
+                    + "SET\n"
+                    + "    dbo.BRAND.BrandName = ?,\n"
+                    + "    dbo.BRAND.BrandURL = ?\n"
+                    + "	WHERE dbo.BRAND.BrandID=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, BrandName);
+            statement.setString(2, CommonFunction.toSlug(BrandName));
+            statement.setInt(3, id);
+
+            int rs = statement.executeUpdate();
+
+            return rs;
+
+        } catch (SQLException e) {
+            return -1;
+        }
+    }
 }

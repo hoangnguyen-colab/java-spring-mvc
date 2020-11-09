@@ -65,7 +65,7 @@
                                     <td class="text-center">${item.getBrandID()}</td>
                                     <td class="text-center brand-input" id="brand-${item.getBrandID()}-input">
                                         <input class="text-center form-control" id="brand-${item.getBrandID()}"
-                                               value="${item.getBrandID()}"
+                                               value="${item.getBrandName()}"
                                                readonly />
                                     </td>
                                     <td class="text-center" id="brand-${item.getBrandID()}-text">
@@ -130,12 +130,15 @@
                                                                 .then((willDelete) => {
                                                                     if (willDelete) {
                                                                         $.ajax({
-                                                                            type: "post",
-                                                                            url: "123",
-                                                                            data: "id=" + id,
-                                                                            success: function (response) {
-                                                                                if (response.Success == 1) {
-                                                                                    swal("Deleted!", "", "success")
+                                                                            type: "get",
+                                                                            url: "/admin/brand/submitdelete",
+                                                                            data: {'id': id},
+                                                                            dataType: "json",
+                                                                            contentType: "application/json",
+                                                                            success: function (data) {
+                                                                                console.log(data);
+                                                                                if (data.Status == true) {
+                                                                                    swal("Delete success!", "", "success")
                                                                                             .then((value) => {
                                                                                                 location.reload();
                                                                                             });
@@ -144,7 +147,7 @@
                                                                                 }
                                                                             },
                                                                             error: function (error) {
-                                                                                swal("Delete fail!", "", "error");
+                                                                                swal("Error deleting item!", "", "error");
                                                                             }
                                                                         });
                                                                     }
@@ -162,24 +165,26 @@
                                                                 .then((willDelete) => {
                                                                     if (willDelete) {
                                                                         $.ajax({
-                                                                            type: "post",
-                                                                            url: `123123`,
+                                                                            type: "get",
+                                                                            url: `/admin/brand/submitedit`,
                                                                             data: {
                                                                                 "id": id,
-                                                                                "BrandName": $("#cate-" + id).val()
+                                                                                "BrandName": $("#brand-" + id).val()
                                                                             },
-                                                                            success: function (response) {
-                                                                                if (response.Success == 1) {
-                                                                                    swal("Edit!", "", "success")
+                                                                            dataType: "json",
+                                                                            contentType: "application/json",
+                                                                            success: function (data) {
+                                                                                if (data.Status == true) {
+                                                                                    swal("Edit success", "", "success")
                                                                                             .then((value) => {
                                                                                                 location.reload();
                                                                                             });
-                                                                                } else {
-                                                                                    swal("Edit fail!", "", "error");
+                                                                                } else if (data.Status == false) {
+                                                                                    swal("Edit fail", data.Message, "error");
                                                                                 }
                                                                             },
                                                                             error: function (error) {
-                                                                                swal("Edit fail!", "", "error");
+                                                                                swal("Fail editing item", "", "error");
                                                                             }
                                                                         });
                                                                     }
@@ -247,7 +252,10 @@
                                 "BrandName": $("#brand-input").val()
                             },
                             success: function (data) {
-                                console.log(data);
+                                swal("Add success!", "", "success")
+                                        .then((value) => {
+                                            location.reload();
+                                        });
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 swal({

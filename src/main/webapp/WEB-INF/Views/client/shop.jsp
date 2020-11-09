@@ -212,8 +212,8 @@
                                             .then((value) => {
                                                 location.reload();
                                             });
-                                } else {
-                                    swal("Failed", data.message, "error");
+                                } else if (data.Status == false) {
+                                    swal("Failed", data.Message, "error");
                                 }
                             },
                             error: function (response) {

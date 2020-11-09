@@ -3,7 +3,6 @@ package com.spring.controller.client;
 import com.google.gson.Gson;
 import com.spring.dao.ProductDAO;
 import com.spring.entity.CartItem;
-import com.spring.entity.CartSession;
 import com.spring.entity.JsonStatus;
 import java.util.ArrayList;
 import java.util.List;

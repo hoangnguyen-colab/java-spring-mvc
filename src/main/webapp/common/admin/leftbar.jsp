@@ -14,7 +14,7 @@
                 <h3 class="navigation-title">Navigation</h3>
             </li>
             <li class="active">
-                <a href="#" title="Home"><i class="mdi mdi-gauge"></i> <span>Home</span></a>
+                <a href="/admin/home" title="Home"><i class="mdi mdi-gauge"></i> <span>Home</span></a>
             </li>
             <li>
                 <h3 class="navigation-title">Components</h3>
@@ -23,7 +23,7 @@
                 <a href=""><i class="mdi mdi-cart"></i> <span>Product</span></a>
                 <ul class="child-list">
                     <li>
-                        <a href="#" title="Add new">
+                        <a href="/admin/brand/branddata" title="Add new">
                             <i class="mdi mdi-tag"></i>
                             <span> Brand</span>
                         </a>
@@ -35,7 +35,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" title="Create New">
+                        <a href="" title="Create New">
                             <i class="mdi mdi-file-document-box"></i>
                             <span> Create New</span>
                         </a>
