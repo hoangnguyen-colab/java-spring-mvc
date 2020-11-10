@@ -19,8 +19,11 @@
             <li>
                 <h3 class="navigation-title">Components</h3>
             </li>
+            <li class="active">
+                <a href="/admin/brand" title="Brand"><i class="mdi mdi-gauge"></i> <span>Brand</span></a>
+            </li>
             <li class="menu-list">
-                <a href=""><i class="mdi mdi-cart"></i> <span>Product</span></a>
+                <a href="/admin/product/selectbrand"><i class="mdi mdi-cart"></i> <span>Product</span></a>
                 <ul class="child-list">
                     <li>
                         <a href="/admin/brand/branddata" title="Add new">
@@ -42,14 +45,19 @@
                     </li>
                 </ul>
             </li>
+            
+            <li class="">
+                <a href="/admin/productlist" title="Brand"><i class="mdi mdi-gauge"></i> <span>Product List</span></a>
+            </li>
+            
             <li class="menu-list">
-                <a href="">
+                <a href="/admin/orderlist">
                     <i class="mdi mdi-shopping"></i>
                     <span>Order</span>
                 </a>
                 <ul class="child-list">
                     <li>
-                        <a href="#" title="Orders">
+                        <a href="/admin/orderlist" title="Orders">
                             <i class="mdi mdi-format-list-bulleted"></i>
                             <span> Order List</span>
                         </a>

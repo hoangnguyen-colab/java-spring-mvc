@@ -139,9 +139,7 @@
                                                                                 console.log(data);
                                                                                 if (data.Status == true) {
                                                                                     swal("Delete success!", "", "success")
-                                                                                            .then((value) => {
-                                                                                                location.reload();
-                                                                                            });
+                                                                                    window.location.reload();
                                                                                 } else {
                                                                                     swal("Delete fail!", "", "error");
                                                                                 }

@@ -91,4 +91,25 @@ public class BrandDAO {
             return -1;
         }
     }
+
+    public Brand getBrand(int id) {
+        Connection conn = DbContext.getConnection();
+        try {
+            String sql = "SELECT * FROM dbo.BRAND b WHERE b.BrandID=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            Brand brand = new Brand();
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                brand.setBrandID(rs.getInt("BrandID"));
+                brand.setBrandName(rs.getString("BrandName"));
+            }
+            return brand;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 }

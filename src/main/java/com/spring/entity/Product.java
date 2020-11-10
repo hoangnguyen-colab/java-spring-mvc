@@ -22,7 +22,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int ProductID, String ProductName, String ProductDescription, BigDecimal ProductPrice, BigDecimal PromotionPrice, String ProductImage, String ProductURL, int BrandID) {
+    public Product(int ProductID, String ProductName, String ProductDescription, BigDecimal ProductPrice, BigDecimal PromotionPrice, String ProductImage, String ProductURL, int BrandID, Date creteddate) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.ProductDescription = ProductDescription;
@@ -31,6 +31,7 @@ public class Product {
         this.ProductImage = ProductImage;
         this.ProductURL = ProductURL;
         this.BrandID = BrandID;
+        this.CreatedDate = creteddate;
     }
 
     public Product(String ProductName, String ProductDescription, BigDecimal ProductPrice, BigDecimal PromotionPrice, int Rating, String ProductImage, int ProductStock, Boolean ProductStatus, int BrandID) {

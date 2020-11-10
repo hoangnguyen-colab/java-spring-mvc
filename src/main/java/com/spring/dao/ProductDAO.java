@@ -1,9 +1,11 @@
 package com.spring.dao;
 
+import com.spring.common.CommonFunction;
 import com.spring.dbcontext.DbContext;
 import com.spring.entity.Product;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +32,9 @@ public class ProductDAO {
                 String img = rs.getString("ProductImage");
                 String url = rs.getString("ProductURL");
                 int brandid = rs.getInt("BrandID");
+                Date createddate = rs.getDate("CreatedDate");
 
-                list.add(new Product(id, name, desc, price, promoprice, img, url, brandid));
+                list.add(new Product(id, name, desc, price, promoprice, img, url, brandid, createddate));
             }
             return list;
 
@@ -39,16 +42,102 @@ public class ProductDAO {
             return null;
         }
     }
-    
-    public Product GetDataByID(int productid){
+
+    public int InsertData(Product prod) {
         Connection conn = DbContext.getConnection();
         try {
-            List<Product> list = new ArrayList<>();
+            String sql = "INSERT dbo.PRODUCT\n"
+                    + "\n"
+                    + "VALUES\n"
+                    + "(\n"
+                    + "    -- ProductID - int\n"
+                    + "    ?, -- ProductName - nvarchar\n"
+                    + "    ?, -- ProductDescription - nvarchar\n"
+                    + "    ?, -- ProductPrice - decimal\n"
+                    + "    ?, -- PromotionPrice - decimal\n"
+                    + "    ?, -- Rating - int\n"
+                    + "    ?, -- ProductImage - nvarchar\n"
+                    + "    ?, -- ProductStock - int\n"
+                    + "    ?, -- ProductURL - nvarchar\n"
+                    + "    ?, -- Viewcount - int\n"
+                    + "    ?, -- ProductStatus - bit\n"
+                    + "    ?, -- CreatedDate - datetime\n"
+                    + "    ? -- BrandID - int\n"
+                    + ")";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, prod.getProductName());
+            statement.setString(2, prod.getProductDescription());
+            statement.setBigDecimal(3, prod.getProductPrice());
+            statement.setBigDecimal(4, prod.getPromotionPrice());
+            statement.setInt(5, 5);
+            statement.setString(6, prod.getProductImage());
+            statement.setInt(7, prod.getProductStock());
+            statement.setString(8, CommonFunction.toSlug(prod.getProductName()));
+            statement.setInt(9, 0);
+            statement.setBoolean(10, prod.getProductStatus());
+            statement.setDate(11, java.sql.Date.valueOf(java.time.LocalDate.now()));
+            statement.setInt(12, prod.getBrandID());
+
+            int rs = statement.executeUpdate();
+
+            return rs;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public int EditData(Product prod) {
+        Connection conn = DbContext.getConnection();
+        try {
+            String sql = "UPDATE dbo.PRODUCT\n"
+                    + "SET\n"
+                    + "    dbo.PRODUCT.ProductName = ?, -- nvarchar\n"
+                    + "    dbo.PRODUCT.ProductDescription = ?, -- nvarchar\n"
+                    + "    dbo.PRODUCT.ProductPrice = ?, -- decimal\n"
+                    + "    dbo.PRODUCT.PromotionPrice = ?, -- decimal\n"
+                    + "    dbo.PRODUCT.Rating = ?, -- int\n"
+                    + "    dbo.PRODUCT.ProductImage = ?, -- nvarchar\n"
+                    + "    dbo.PRODUCT.ProductStock = ?, -- int\n"
+                    + "    dbo.PRODUCT.ProductURL = ?, -- nvarchar\n"
+                    + "    dbo.PRODUCT.Viewcount = ?, -- int\n"
+                    + "    dbo.PRODUCT.ProductStatus = ?, -- bit\n"
+                    + "    dbo.PRODUCT.CreatedDate = ?"
+                    + "    Where dbo.PRODUCT.ProductID = ?";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, prod.getProductName());
+            statement.setString(2, prod.getProductDescription());
+            statement.setBigDecimal(3, prod.getProductPrice());
+            statement.setBigDecimal(4, prod.getPromotionPrice());
+            statement.setInt(5, 5);
+            statement.setString(6, prod.getProductImage());
+            statement.setInt(7, prod.getProductStock());
+            statement.setString(8, CommonFunction.toSlug(prod.getProductName()));
+            statement.setInt(9, 0);
+            statement.setBoolean(10, prod.getProductStatus());
+            statement.setDate(11, java.sql.Date.valueOf(java.time.LocalDate.now()));
+            statement.setInt(12, prod.getProductID());
+            int rs = statement.executeUpdate();
+
+            return rs;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public Product GetDataByID(int productid) {
+        Connection conn = DbContext.getConnection();
+        try {
             String query = "SELECT * FROM PRODUCT WHERE PRODUCT.ProductID = ?";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, productid);
             Product prod = new Product();
-            
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 prod.setProductID(rs.getInt("ProductID"));
@@ -63,7 +152,7 @@ public class ProductDAO {
                 prod.setProductStock(rs.getInt("ProductStock"));
                 prod.setCreatedDate(rs.getDate("CreatedDate"));
                 prod.setBrandID(rs.getInt("BrandID"));
-                
+
                 break;
             }
             return prod;
@@ -81,7 +170,7 @@ public class ProductDAO {
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, offset);
             st.setInt(2, max);
-            
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -92,8 +181,9 @@ public class ProductDAO {
                 String img = rs.getString("ProductImage");
                 String url = rs.getString("ProductURL");
                 int brandid = rs.getInt("BrandID");
+                Date createddate= rs.getDate("CreatedDate");
 
-                list.add(new Product(id, name, desc, price, promoprice, img, url, brandid));
+                list.add(new Product(id, name, desc, price, promoprice, img, url, brandid, createddate));
             }
             return list;
 
@@ -101,18 +191,33 @@ public class ProductDAO {
             return null;
         }
     }
-    
+
     public Integer Count() {
         Connection conn = DbContext.getConnection();
         try {
             String query = "SELECT COUNT(*) AS 'Count' FROM PRODUCT ";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query);
-            
+
             return rs.getInt("Count");
 
         } catch (SQLException e) {
             return null;
+        }
+    }
+
+    public boolean DeleteData(int id) {
+        Connection conn = DbContext.getConnection();
+        try {
+            String sql = " DELETE dbo.Product Where ProductID=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            statement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            return false;
         }
     }
 

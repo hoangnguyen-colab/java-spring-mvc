@@ -19,7 +19,7 @@
         <div class="card-body">
             <h1 class="header-title">Product List</h1>
             <p class="text-muted">
-                <a href="/admin/createproduct">Create New</a>
+                <a href="/admin/product/selectbrand">Create New</a>
             </p>
 
             <table class="table table-bordered" id="product-table">
@@ -27,9 +27,6 @@
                     <tr>
                         <th>
                             Image
-                        </th>
-                        <th class="text-center">
-                            ID
                         </th>
                         <th class="text-center">
                             Name
@@ -52,9 +49,6 @@
                                 <img src="${item.getProductImage()}" style="max-height: 50px;" />
                             </td>
                             <td class="text-center">
-                                ${item.getProductID()}
-                            </td>
-                            <td class="text-center">
                                 ${item.getProductName()}
                             </td>
                             <td class="text-center">
@@ -66,10 +60,16 @@
 
                             <td class="text-center">
 
-                                <button class="btn btn-sm btn-primary" type="submit" value="Edit" 
-                                        <i class="mdi mdi-border-color"></i>
+                                <button class="btn btn-sm btn-primary"
+                                        type="submit" value="Edit"
+                                        id="edit-${item.getProductID()}"
+                                        onclick="return EditItem('${item.getProductID()}')">
+                                    <i class="mdi mdi-border-color"></i>
                                 </button>
-                                <button class="btn btn-sm btn-danger" type="button" value="Delete" >
+                                <button class="btn btn-sm btn-danger"
+                                        type="submit" value="Delete"
+                                        id="delete-${item.getProductID()}"
+                                        onclick="return DeleteItem('${item.getProductID()}')">
                                     <i class="mdi mdi-delete"></i>
                                 </button>
                             </td>
@@ -81,6 +81,62 @@
                 </tbody>
             </table>
 
+
         </div>
+
+        <script src="/assets/sweetalert.min.js"></script>
+        <script src="/assets/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="/assets/admin/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="/assets/admin/plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="/assets/admin/plugins/datatables/responsive.bootstrap4.min.js"></script>
+        <script>
+                                            $(document).ready(function () {
+                                                $(function () {
+                                                    $('#product-table').DataTable();
+                                                });
+                                            });
+
+                                            function DeleteItem(id) {
+                                                swal({
+                                                    title: "DELETE item with id: " + id + "?",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                })
+                                                        .then((willDelete) => {
+                                                            if (willDelete) {
+                                                                $.ajax({
+                                                                    type: "get",
+                                                                    url: "/admin/product/submitdelete",
+                                                                    data: {'id': id},
+                                                                    dataType: "json",
+                                                                    contentType: "application/json",
+                                                                    success: function (data) {
+                                                                        console.log(data);
+                                                                        if (data.Status) {
+                                                                            swal("Delete success!", "", "success")
+                                                                                    .then((value) => {
+                                                                                        location.reload();
+                                                                                    });
+                                                                        } else {
+                                                                            swal("Delete fail!", "", "error");
+                                                                        }
+
+                                                                    },
+                                                                    error: function (data) {
+                                                                        console.log(data);
+                                                                        swal("Error deleting item!", "", "error");
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                            }
+                                            ;
+                                            function EditItem(id) {
+                                                window.location.href = `/admin/editproduct/` + id;
+                                            }
+                                            ;
+        </script>
     </body>
+
 </html>

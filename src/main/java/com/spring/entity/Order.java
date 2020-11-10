@@ -4,13 +4,21 @@
  * and open the template in the editor.
  */
 package com.spring.entity;
+
+import java.math.BigDecimal;
 import java.sql.Date;
+
 /**
  *
  * @author FR
  */
 public class Order {
 
+    public Order() {
+    }
+
+    public Order(int id, Date orderDate, BigDecimal total, String customername, String customerphone, String customeraddress, int orderstatus, int customerid) {
+    }
     private int OrderID;
     private Date OrderDate;
     private float Total;
@@ -19,7 +27,7 @@ public class Order {
     private String CustomerAddress;
     private int OrderStatusID;
     private int CustomerID;
-    
+
     public int getOrderID() {
         return OrderID;
     }
@@ -83,6 +91,5 @@ public class Order {
     public void setCustomerID(int CustomerID) {
         this.CustomerID = CustomerID;
     }
-    
-    
+
 }
