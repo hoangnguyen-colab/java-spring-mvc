@@ -48,7 +48,7 @@
                                             <c:otherwise>
                                                 <li>
                                                     <a href="javascript:void(0);">
-                                                        Xin chào ${sessionScope.customerLogin.getCustomerName()}
+                                                        ${sessionScope.customerLogin.getCustomerName()}
                                                     </a>
                                                     <ul class="dropdown">
                                                         <li>

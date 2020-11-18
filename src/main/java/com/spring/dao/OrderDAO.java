@@ -16,14 +16,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OrderDAO {
 
     public List<Order> GetData() {
         Connection conn = DbContext.getConnection();
         try {
             List<Order> list = new ArrayList<>();
-            String query = "SELECT * FROM ORDER ORDER BY OrderID";
+            String query = "SELECT * FROM [ORDER] ORDER BY OrderID";
             PreparedStatement st = conn.prepareStatement(query);
 
             ResultSet rs = st.executeQuery();

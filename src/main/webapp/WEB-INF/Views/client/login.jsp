@@ -103,7 +103,7 @@
             $(document).ready(function () {
                 $("#login-loader").hide();
                 $("#reg-loader").hide();
-                
+
                 $("#login-form").validate({
                     rules: {
                         'log-name': "required",
@@ -120,6 +120,7 @@
                         },
                     },
                     submitHandler: function () {
+                        event.preventDefault();
                         $("#login-btn").attr("disabled", true);
                         $("#login-loader").show();
                         $("#login-button-text").hide();
@@ -139,14 +140,13 @@
                             contentType: "application/json",
                             success: function (response) {
                                 console.log(response);
-//                                if (response.Success) {
-//                                    $("#login-button-text").text("Login Success");
-//                                    let url = "123";
+                                if (response.Status) {
+                                    $("#login-button-text").text("Login Success");
+                                    let url = "/";
 //                                    url = url.replace("cus-username", response.Username);
-//                                    window.location.href = url;
-//                                } else
-//                                    $("#login-button-text").text("Login Fail");
-//                                window.location.reload();
+                                    window.location.href = url;
+                                } else
+                                    $("#login-button-text").text("Login Fail");
                             },
                             error: function (response) {
                                 $("#login-button-text").text("Error while logging in!");

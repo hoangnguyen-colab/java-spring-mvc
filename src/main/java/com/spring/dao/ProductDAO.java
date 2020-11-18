@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductDAO {
 
     public List<Product> GetData() {
@@ -220,18 +222,4 @@ public class ProductDAO {
             return false;
         }
     }
-
-//    ProductID INT PRIMARY KEY IDENTITY(1, 1),
-//    ProductName NVARCHAR(255) NOT NULL,
-//    ProductDescription NVARCHAR(MAX),--mô tả
-//    ProductPrice DECIMAL(18, 0) NOT NULL,
-//    PromotionPrice DECIMAL(18, 0) DEFAULT 0,
-//    Rating INT CHECK (RATING >=0 AND RATING <= 5),
-//    ProductImage NVARCHAR(4000) DEFAULT N'',
-//    ProductStock INT DEFAULT 1,--tồn kho
-//    ProductURL NVARCHAR(255),
-//    Viewcount INT,
-//    ProductStatus BIT,
-//    CreatedDate DATETIME DEFAULT GETDATE(),
-//    BrandID 
 }

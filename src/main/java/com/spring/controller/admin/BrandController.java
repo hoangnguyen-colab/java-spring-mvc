@@ -8,6 +8,7 @@ import com.spring.entity.JsonStatus;
 import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,16 +21,19 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller(value = "AdminBrandController")
 public class BrandController {
 
+    @Autowired
+    private BrandDAO branddao;
+
     @RequestMapping("admin/brand")
     public ModelAndView BrandHome() {
 
-        return new ModelAndView("admin/brandhome", "brandlist", new BrandDAO().GetData());
+        return new ModelAndView("admin/brandhome", "brandlist", branddao.GetData());
     }
 
     @RequestMapping(value = "admin/brand/submitcreate", method = RequestMethod.GET)
     @ResponseBody
     public String SubmitCreate(String BrandName) {
-        int result = new BrandDAO().InsertData(BrandName);
+        int result = branddao.InsertData(BrandName);
         if (result == 1) {
 
             return new Gson().toJson("Success");
@@ -43,7 +47,7 @@ public class BrandController {
     @RequestMapping(value = "admin/brand/submitdelete", method = RequestMethod.GET)
     @ResponseBody
     public String SubmitDelete(int id) {
-        boolean result = new BrandDAO().DeleteData(id);
+        boolean result = branddao.DeleteData(id);
         if (result == true) {
 
             return new Gson().toJson(new JsonStatus(true, "Success"));
@@ -57,7 +61,7 @@ public class BrandController {
     @RequestMapping(value = "admin/brand/submitedit", method = RequestMethod.GET)
     @ResponseBody
     public String SubmitEdit(int id, String BrandName) {
-        int result = new BrandDAO().EditData(id, BrandName);
+        int result = branddao.EditData(id, BrandName);
         if (result == 0) {
             return new Gson().toJson(new JsonStatus(false, "Edit Fail"));
         } else if (result == -1) {
@@ -72,9 +76,11 @@ public class BrandController {
     public @ResponseBody
     String ProductData() {
 
-        return new Gson().toJson(new BrandDAO().GetData());
+        return new Gson().toJson(branddao.GetData());
     }
-    
-    
-    
+
+    @RequestMapping("admin/createproduct/{id}")
+    public ModelAndView CreateProduct(@PathVariable int id) {
+        return new ModelAndView("admin/createproduct", "Brand", branddao.getBrand(id));
+    }
 }

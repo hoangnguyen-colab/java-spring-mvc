@@ -77,7 +77,7 @@
                                ${item.getOrderDate()}
                             </td>
                             <td>
-                                ${item.Total.Value.ToString("#,##0")}
+                                
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-success"

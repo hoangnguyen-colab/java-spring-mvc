@@ -38,7 +38,9 @@
                         <th class="text-center">
                             CreatedDate
                         </th>
-
+                        <th class="text-center">
+                            Option
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

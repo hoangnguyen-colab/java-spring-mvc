@@ -1,9 +1,12 @@
 package com.spring.controller.client;
 
 import com.google.gson.Gson;
+import com.spring.dao.CustomerDAO;
 import com.spring.dao.ProductDAO;
+import com.spring.entity.JsonStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CustomerController {
 
+    @Autowired
+    private CustomerDAO customerdao;
+    
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView Login() {
 
@@ -30,9 +36,20 @@ public class CustomerController {
 
     @RequestMapping(value = "customer/vaidate", method = RequestMethod.GET)
     public @ResponseBody
-    String ValidateUser(String CustomerUsername) {
+    String ValidateUser(HttpSession session, String CustomerUsername, String CustomerPassword) {
 
-        return new Gson().toJson(CustomerUsername);
+        int result = customerdao.Login(CustomerUsername, CustomerPassword);
+        if (result == -1) {
+
+            return new Gson().toJson(new JsonStatus(false, "Db Error"));
+        } else if (result == 0) {
+            return new Gson().toJson(new JsonStatus(false, "Fail"));
+        } else {
+            
+            session.setAttribute("customerLogin", customerdao.GetByUsername(CustomerUsername));
+            
+            return new Gson().toJson(new JsonStatus(true, "Success"));
+        }
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
