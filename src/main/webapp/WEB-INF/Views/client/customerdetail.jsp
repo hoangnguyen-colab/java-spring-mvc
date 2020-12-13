@@ -7,6 +7,226 @@
         <title>Customer</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/loading-spinner.css'/>">
+        <link href="~/Assets/css/profile-page.css" rel="stylesheet" />
+
+        <div class="breadcrumb-area pt-255 pb-170" style="background-image: url(https://www.klaviyo.com/wp-content/uploads/2016/09/abstract-background-1024x273.jpg)">
+            <div class="container-fluid">
+                <div class="breadcrumb-content text-center">
+                    <h2>${sessionScope.customerLogin.getCustomerName()}</h2>
+                    <ul>
+                        <li>
+                            <a href="/">home</a>
+                        </li>
+                        <li>thông tin khách hàng</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container bootstrap snippet ptb-80" style="margin-bottom: 50px;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title mb-4">
+                                <div class="d-flex justify-content-start">
+                                    <div class="image-container">
+                                        <img src="http://placehold.it/150x150" style="width: 150px; height: 150px" class="img-thumbnail" />
+                                    </div>
+                                    <div class="userData ml-3">
+                                        <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">
+                                            <a href="javascript:void(0);">${sessionScope.customerLogin.getCustomerName()}
+                                            </a>
+                                        </h2>
+
+                                        <h6 class="d-block"><a href="javascript:void(0)">1,500</a> Sản phẩm</h6>
+                                        <h6 class="d-block"><a href="javascript:void(0)">300</a> Đơn hàng</h6>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="orders-tab" data-toggle="tab" href="#orders_tab" role="tab" aria-controls="orders_tab" aria-selected="true">Đơn hàng</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="false">Thông tin</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="something-tab" data-toggle="tab" href="#something_tab" role="tab" aria-controls="something_tab" aria-selected="false">Updating</a>
+                                        </li>
+                                    </ul>
+                                    <!--Tab-->
+                                    <div class="tab-content ml-1" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="orders_tab" role="tabpanel" aria-labelledby="orders-tab">
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <h5>Lọc:</h5>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <select id="status-select">
+                                                        <option value="0">Tất cả</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <h5>Nhấn (+) để hiển thị chi tiết!</h5>
+
+                                            <div class="loader" id="loader">
+                                                <svg class="circular">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
+                                                </svg>
+                                            </div>
+                                            <div id="order-details-partial">
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Họ tên</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    ${sessionScope.customerLogin.getCustomerName()}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Số điện thoại</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    ${sessionScope.customerLogin.getCustomerName()}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Email</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    ${sessionScope.customerLogin.getCustomeEmail()}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Số điện thoại</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    ${sessionScope.customerLogin.getCustomerPhone()}
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Đia chỉ</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    ${sessionScope.customerLogin.getCustomerAddress()}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Username</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    ${sessionScope.customerLogin.getCustomerUsername()}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-2 col-5">
+                                                    <label style="font-weight:bold;">Ngày tạo tài khoản</label>
+                                                </div>
+                                                <div class="col-md-8 col-6">
+                                                    ${sessionScope.customerLogin.getCreatedDate()}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade" id="something_tab" role="tabpanel" aria-labelledby="something-tab">
+                                            Cập nhật thông tin
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+            $.get("@Url.Action("GetStatus", "Order")",
+                    function (data) {
+                    var select = $("#status-select");
+                    for (i = 0; i < data.length; i++) {
+                    select.append(`<option value="${data[i].StatusID}">${data[i].StatusName}</option>`);
+                    };
+                    }
+            );
+            $('#status-select').on('change', function () {
+            $.get("@Url.Action("OrderList", "Order")",
+            {
+            "StatusID": this.value
+            },
+                    function (data) {
+                    $("#order-details-partial").empty();
+                    $("#order-details-partial").append(data);
+                    $("#loader").hide();
+                    }
+            );
+            });
+            $.get("@Url.Action("OrderList", "Order", new { Area = "" })",
+            {
+            "StatusID": 0
+            },
+                    function (data) {
+                    $("#order-details-partial").append(data);
+                    $("#loader").hide();
+                    }
+            );
+            });
+        </script>
+
+        <script>
+            function CancelOrder(id) {
+            swal({
+            title: `Cancel order with id: ${id}?`,
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+            }).then((willDelete) => {
+            if (willDelete) {
+            $.ajax({
+            type: "post",
+                    url: `@Url.Action("CancelOrder", "Order")`,
+                    data: "OrderID=" + id,
+                    success: function (response) {
+                    if (response.Status == true) {
+                    swal("Cancel success", "", "success")
+                            .then((value) => {
+                            location.reload();
+                            });
+                    } else if (response.Status == false) {
+                    swal("Cancel fail", data.Message, "error");
+                    }
+                    },
+                    error: function () {
+                    swal("Cancel fail", "", "error");
+                    }
+            });
+            }
+            });
+            };
+        </script>
     </body>
 </html>
