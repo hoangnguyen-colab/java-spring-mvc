@@ -46,4 +46,31 @@ public class OrderDAO {
             return null;
         }
     }
+    public List<Order> LoadOrder(int userid) {
+        Connection conn = DbContext.getConnection();
+        try {
+            List<Order> list = new ArrayList<>();
+            String query = "SELECT * FROM [ORDER] WHERE [ORDER].CustomerID = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, userid);
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                int id = rs.getInt("OrderID");
+                Date orderDate = rs.getDate("OrderDate");
+                BigDecimal total = rs.getBigDecimal("Total");
+                String customername = rs.getString("CustomerName");
+                String customerphone = rs.getString("CustomerPhone");
+                String customeraddress = rs.getString("CustomerAddress");
+                int orderstatus = rs.getInt("OrderStatusID");
+                int customerid = rs.getInt("CustomerID");
+                
+                list.add(new Order(id, orderDate, total, customername, customerphone, customeraddress, orderstatus, customerid));
+            }
+            return list;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 }

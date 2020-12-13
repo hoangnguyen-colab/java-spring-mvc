@@ -142,9 +142,10 @@
                                 console.log(response);
                                 if (response.Status) {
                                     $("#login-button-text").text("Login Success");
-                                    let url = "/";
+                                    window.location.href = "/profile"
+//                                    let url = "/";
 //                                    url = url.replace("cus-username", response.Username);
-                                    window.location.href = url;
+//                                    window.location.href = url;
                                 } else
                                     $("#login-button-text").text("Login Fail");
                             },

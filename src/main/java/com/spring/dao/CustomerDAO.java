@@ -60,4 +60,28 @@ public class CustomerDAO {
             return -1;
         }
     }
+    
+    public int Signup(Customer model) {
+        return 0;
+
+//        Connection conn = DbContext.getConnection();
+//        try {
+//            String query = "SELECT count(c.CustomerUsername) AS 'count' FROM dbo.CUSTOMER c\n"
+//                    + "	WHERE c.CustomerUsername=? AND c.CustomerPassword=?";
+//            PreparedStatement st = conn.prepareStatement(query);
+//
+//
+//            ResultSet rs = st.executeQuery();
+//            int count = 0;
+//            while (rs.next()) {
+//                count = rs.getInt("count");
+//            }
+//
+//            return count;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return -1;
+//        }
+    }
 }

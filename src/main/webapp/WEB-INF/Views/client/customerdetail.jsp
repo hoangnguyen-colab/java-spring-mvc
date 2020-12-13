@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,7 +9,8 @@
     </head>
     <body>
         <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/loading-spinner.css'/>">
-        <link href="~/Assets/css/profile-page.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/profile-page.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/assets/client/css/order-list.css'/>">
 
         <div class="breadcrumb-area pt-255 pb-170" style="background-image: url(https://www.klaviyo.com/wp-content/uploads/2016/09/abstract-background-1024x273.jpg)">
             <div class="container-fluid">
@@ -73,14 +75,71 @@
                                                 </div>
                                             </div>
                                             <br />
-                                            <h5>Nhấn (+) để hiển thị chi tiết!</h5>
+                                            <!--<h5>Nhấn (+) để hiển thị chi tiết!</h5>-->
 
-                                            <div class="loader" id="loader">
-                                                <svg class="circular">
-                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
-                                                </svg>
-                                            </div>
+                                            <!--                                            <div class="loader" id="loader">
+                                                                                            <svg class="circular">
+                                                                                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
+                                                                                            </svg>
+                                                                                        </div>-->
                                             <div id="order-details-partial">
+                                                <div class="table-responsive table-bordered">
+                                                    <table class="table">
+                                                        <thead class="thead-dark">
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th class="text-center">ID Đơn hàng</th>
+                                                                <th class="text-center">Tổng tiền</th>
+                                                                <th class="text-center">Ngày đặt hàng</th>
+                                                                <th class="text-center">Tình Trạng</th>
+                                                                <th class="text-center">Ghi chú</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach items="${orderlist}" var="item">
+<!--                                                                <tr class="accordion-toggle collapsed alert" id="alert-@item.OrderID">
+                                                                    <td class="expand-button" 
+                                                                        id="accordion-${item.getOrderID()}" 
+                                                                        data-toggle="collapse" 
+                                                                        data-parent="#accordion-${item.getOrderID()}" 
+                                                                        href="#collapse-${item.getOrderID()}" 
+                                                                        style="cursor: pointer;">
+                                                                    </td>-->
+                                                                    <td class="text-center" >
+                                                                        <a href="/orderdetail/${item.GetOrderID()}">${item.getOrderID()}</a>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        ${item.getTotal()}
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        ${item.getOrderDate()}
+                                                                    </td>
+                                                                    <th class="text-center">
+                                                                        ${item.getOrderStatusID()}
+                                                                    </th>
+                                                                    <td class="text-center">
+                                                                        <c:choose>
+                                                                            <c:when test="${item.getOrderStatusID() == 1}">
+                                                                                <button class="btn btn-danger" id="@item.OrderID"
+                                                                                        onclick="return CancelOrder('@item.OrderID')">
+                                                                                    Hủy đơn hàng
+                                                                                </button>
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="hide-table-padding">
+                                                                    <td colspan="7">
+                                                                        <div id="collapse-@item.OrderID" class="collapse in p-3">
+                                                                            <div class="card card-body" id="@item.OrderID-product-partial">
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -120,7 +179,6 @@
                                                     ${sessionScope.customerLogin.getCustomerPhone()}
                                                 </div>
                                             </div>
-
 
                                             <div class="row">
                                                 <div class="col-sm-3 col-md-2 col-5">
@@ -165,68 +223,69 @@
 
         <script>
             $(document).ready(function () {
-            $.get("@Url.Action("GetStatus", "Order")",
-                    function (data) {
-                    var select = $("#status-select");
-                    for (i = 0; i < data.length; i++) {
-                    select.append(`<option value="${data[i].StatusID}">${data[i].StatusName}</option>`);
-                    };
-                    }
-            );
-            $('#status-select').on('change', function () {
-            $.get("@Url.Action("OrderList", "Order")",
-            {
-            "StatusID": this.value
-            },
-                    function (data) {
-                    $("#order-details-partial").empty();
-                    $("#order-details-partial").append(data);
-                    $("#loader").hide();
-                    }
-            );
-            });
-            $.get("@Url.Action("OrderList", "Order", new { Area = "" })",
-            {
-            "StatusID": 0
-            },
-                    function (data) {
-                    $("#order-details-partial").append(data);
-                    $("#loader").hide();
-                    }
-            );
+//            $.get("@Url.Action("GetStatus", "Order")",
+//                    function (data) {
+//                    var select = $("#status-select");
+//                    for (i = 0; i < data.length; i++) {
+//                    select.append(`<option value="${data[i].StatusID}">${data[i].StatusName}</option>`);
+//                    };
+//                    }
+//            );
+//            $('#status-select').on('change', function () {
+//            $.get("@Url.Action("OrderList", "Order")",
+//            {
+//            "StatusID": this.value
+//            },
+//                    function (data) {
+//                    $("#order-details-partial").empty();
+//                    $("#order-details-partial").append(data);
+//                    $("#loader").hide();
+//                    }
+//            );
+//            });
+//            $.get("@Url.Action("OrderList", "Order", new { Area = "" })",
+//            {
+//            "StatusID": 0
+//            },
+//                    function (data) {
+//                    $("#order-details-partial").append(data);
+//                    $("#loader").hide();
+//                    }
+//            );
             });
         </script>
 
         <script>
             function CancelOrder(id) {
-            swal({
-            title: `Cancel order with id: ${id}?`,
+                swal({
+                    title: `Cancel order with id: ${id}?`,
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
-            }).then((willDelete) => {
-            if (willDelete) {
-            $.ajax({
-            type: "post",
-                    url: `@Url.Action("CancelOrder", "Order")`,
-                    data: "OrderID=" + id,
-                    success: function (response) {
-                    if (response.Status == true) {
-                    swal("Cancel success", "", "success")
-                            .then((value) => {
-                            location.reload();
-                            });
-                    } else if (response.Status == false) {
-                    swal("Cancel fail", data.Message, "error");
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "post",
+                            url: `@Url.Action("CancelOrder", "Order")`,
+                            data: "OrderID=" + id,
+                            success: function (response) {
+                                if (response.Status == true) {
+                                    swal("Cancel success", "", "success")
+                                            .then((value) => {
+                                                location.reload();
+                                            });
+                                } else if (response.Status == false) {
+                                    swal("Cancel fail", data.Message, "error");
+                                }
+                            },
+                            error: function () {
+                                swal("Cancel fail", "", "error");
+                            }
+                        });
                     }
-                    },
-                    error: function () {
-                    swal("Cancel fail", "", "error");
-                    }
-            });
+                });
             }
-            });
-            };
+            ;
         </script>
     </body>
 </html>

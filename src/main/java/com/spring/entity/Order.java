@@ -1,32 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.spring.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 
-/**
- *
- * @author FR
- */
 public class Order {
 
-    public Order() {
-    }
-
-    public Order(int id, Date orderDate, BigDecimal total, String customername, String customerphone, String customeraddress, int orderstatus, int customerid) {
-    }
     private int OrderID;
     private Date OrderDate;
-    private float Total;
+    private BigDecimal Total;
     private String CustomerName;
     private String CustomerPhone;
     private String CustomerAddress;
     private int OrderStatusID;
     private int CustomerID;
+
+    public Order() {
+    }
+
+    public Order(int OrderID, Date OrderDate, BigDecimal Total, String CustomerName, String CustomerPhone, String CustomerAddress, int OrderStatusID, int CustomerID) {
+        this.OrderID = OrderID;
+        this.OrderDate = OrderDate;
+        this.Total = Total;
+        this.CustomerName = CustomerName;
+        this.CustomerPhone = CustomerPhone;
+        this.CustomerAddress = CustomerAddress;
+        this.OrderStatusID = OrderStatusID;
+        this.CustomerID = CustomerID;
+    }
 
     public int getOrderID() {
         return OrderID;
@@ -36,7 +36,7 @@ public class Order {
         return OrderDate;
     }
 
-    public float getTotal() {
+    public BigDecimal getTotal() {
         return Total;
     }
 
@@ -68,7 +68,7 @@ public class Order {
         this.OrderDate = OrderDate;
     }
 
-    public void setTotal(float Total) {
+    public void setTotal(BigDecimal Total) {
         this.Total = Total;
     }
 
