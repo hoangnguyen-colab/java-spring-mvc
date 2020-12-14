@@ -45,31 +45,31 @@ public class CustomerController {
     @RequestMapping(value = "customer/vaidate", method = RequestMethod.GET)
     public @ResponseBody
     String ValidateUser(HttpSession session, String CustomerUsername, String CustomerPassword) {
-        String encrypt = CommonFunction.StringToMD5(CustomerPassword);
-        int result = customerdao.Login(CustomerUsername, encrypt);
-        if (result == -1) {
-
-            return new Gson().toJson(new JsonStatus(false, "Db Error"));
-        } else if (result == 0) {
-            return new Gson().toJson(new JsonStatus(false, "Fail"));
-        } else {
-            session.setAttribute("customerLogin", customerdao.GetByUsername(CustomerUsername));
-            return new Gson().toJson(new JsonStatus(true, "Success"));
+        int result = customerdao.Login(CustomerUsername, CustomerPassword);
+        switch (result) {
+            case -1:
+                return new Gson().toJson(new JsonStatus(false, "Db Error"));
+            case 0:
+                return new Gson().toJson(new JsonStatus(false, "Fail"));
+            default:
+                return new Gson().toJson(new JsonStatus(true, "Success"));
         }
     }
-    
+
     @RequestMapping(value = "customer/signup", method = RequestMethod.GET)
     public @ResponseBody
-    String ValidateUser(HttpSession session, Customer model) {
-        model.setCustomerPassword(CommonFunction.StringToMD5(model.getCustomerPassword()));
+    String SignUpUser(HttpSession session, Customer model) {
         int result = customerdao.Signup(model);
-        
-        if (result == -1) {
-            return new Gson().toJson(new JsonStatus(false, "Db Error"));
-        } else if (result == 0) {
-            return new Gson().toJson(new JsonStatus(false, "Fail"));
-        } else {
-            return new Gson().toJson(new JsonStatus(true, "Success"));
+
+        switch (result) {
+            case -1:
+                return new Gson().toJson(new JsonStatus(false, "Db Error"));
+            case -2:
+                return new Gson().toJson(new JsonStatus(false, "Username already taken"));
+            case 0:
+                return new Gson().toJson(new JsonStatus(false, "Fail"));
+            default:
+                return new Gson().toJson(new JsonStatus(true, "Success"));
         }
     }
 

@@ -46,7 +46,6 @@ public class ProductController {
         } else if (result == 0) {
             return new Gson().toJson(new JsonStatus(false, "Fail"));
         } else {
-            
             return new Gson().toJson(new JsonStatus(true, "Success"));
         }
     }

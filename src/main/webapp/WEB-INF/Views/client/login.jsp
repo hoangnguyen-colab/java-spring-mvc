@@ -142,10 +142,7 @@
                                 console.log(response);
                                 if (response.Status) {
                                     $("#login-button-text").text("Login Success");
-                                    window.location.href = "/profile"
-//                                    let url = "/";
-//                                    url = url.replace("cus-username", response.Username);
-//                                    window.location.href = url;
+                                    window.location.href = "/profile";
                                 } else
                                     $("#login-button-text").text("Login Fail");
                             },
@@ -205,18 +202,14 @@
                             "CustomerAddress": $("#reg-address").val()
                         };
                         $.ajax({
-                            url: "123",
-                            type: "post",
+                            url: "<c:url value="/customer/signup"/>",
+                            type: "get",
                             data: JSON.stringify(data),
                             dataType: "json",
                             contentType: "application/json",
                             success: function (response) {
-                                if (response.ReturnID == 1)
-                                    $("#reg-button-text").text("Create Success");
-                                if (response.ReturnID == 0)
-                                    $("#reg-button-text").text("Username has already exist");
-                                else if (response.ReturnID == 2)
-                                    $("#reg-button-text").text("Create Fail");
+                                console.log(response);
+                                $("#reg-button-text").text(response.Message);
                             },
                             error: function (response) {
                                 $("#reg-button-text").text("Error while register your account!");
