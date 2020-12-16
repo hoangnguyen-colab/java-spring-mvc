@@ -45,7 +45,7 @@
                                 </h3>
 
                                 <span>
-                                    Giá: @subtotal.ToString("#,##0")₫
+                                    Giá: subtotal ₫
                                 </span>
                                 <span class="qty">SL: ${item.quantity}</span>
                             </div>
@@ -58,7 +58,7 @@
                     </c:forEach>
                 </ul>
                 <div class="shopping-cart-total">
-                    <h4>tổng @tongsoluong sản phâm   <span>@total.ToString("#,##0")₫</span></h4>
+                    <h4><span>total ₫</span></h4>
                 </div>
                 <div class="shopping-cart-btn">
                     <a class="btn-style cr-btn" href="<c:url value="/cart"/>">chi tiết</a>

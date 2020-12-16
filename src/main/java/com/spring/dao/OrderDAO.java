@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.spring.dao;
 
 import com.spring.dbcontext.DbContext;
@@ -46,11 +41,14 @@ public class OrderDAO {
             return null;
         }
     }
+    
     public List<Order> LoadOrder(int userid) {
         Connection conn = DbContext.getConnection();
         try {
             List<Order> list = new ArrayList<>();
-            String query = "SELECT * FROM [ORDER] WHERE [ORDER].CustomerID = ?";
+            String query = "SELECT * FROM [ORDER] \n" +
+                            "JOIN ORDERSTATUS ON [ORDER].OrderStatusID = ORDERSTATUS.StatusID\n" +
+                            "WHERE [ORDER].CustomerID = ?";
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, userid);
             ResultSet rs = st.executeQuery();
@@ -64,8 +62,75 @@ public class OrderDAO {
                 String customeraddress = rs.getString("CustomerAddress");
                 int orderstatus = rs.getInt("OrderStatusID");
                 int customerid = rs.getInt("CustomerID");
+                String statusname = rs.getString("StatusName");
                 
-                list.add(new Order(id, orderDate, total, customername, customerphone, customeraddress, orderstatus, customerid));
+                list.add(new Order(id, orderDate, total, customername, customerphone, customeraddress, orderstatus, customerid, statusname));
+            }
+            return list;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    public Order LoadOrderDetail(int orderid){
+        Connection conn = DbContext.getConnection();
+        try {
+            Order order = new Order();
+            String query = "SELECT [ORDER].OrderID, \n" +
+                            "[ORDER].OrderDate, \n" +
+                            "[ORDER].Total, \n" +
+                            "[ORDER].CustomerName, \n" +
+                            "[ORDER].CustomerAddress, \n" +
+                            "[ORDER].CustomerPhone,\n" +
+                            "[ORDER].OrderStatusID,\n" +
+                            "ORDERSTATUS.StatusName FROM [ORDER]\n" +
+                            "JOIN ORDERSTATUS ON [ORDER].OrderStatusID = ORDERSTATUS.StatusID\n" +
+                            "WHERE [ORDER].OrderID = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, orderid);
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setOrderDate(rs.getDate("OrderDate"));
+                order.setTotal(rs.getBigDecimal("Total"));
+                order.setCustomerName(rs.getString("CustomerName"));
+                order.setCustomerPhone(rs.getString("CustomerPhone"));
+                order.setCustomerAddress(rs.getString("CustomerAddress"));
+                order.setOrderStatusID(rs.getInt("OrderStatusID"));
+                order.setStatusName(rs.getString("StatusName"));
+                
+                break;
+            }
+            return order;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    public List<Product> LoadOrderProduct(int orderid) {
+        Connection conn = DbContext.getConnection();
+        try {
+            List<Product> list = new ArrayList<>();
+            String query = "SELECT PRODUCT.ProductID, PRODUCT.ProductImage, PRODUCT.ProductName, PRODUCT.ProductPrice, ORDERDETAIL.Quantity\n" +
+                            "FROM [ORDER] \n" +
+                            "JOIN ORDERDETAIL ON [ORDER].OrderID = ORDERDETAIL.OrderID\n" +
+                            "JOIN ORDERSTATUS ON [ORDER].OrderStatusID = ORDERSTATUS.StatusID\n" +
+                            "JOIN PRODUCT ON ORDERDETAIL.ProductID = PRODUCT.ProductID\n" +
+                            "WHERE ORDERDETAIL.OrderID = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, orderid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String image = rs.getString("ProductImage");
+                String name = rs.getString("ProductName");
+                BigDecimal price = rs.getBigDecimal("ProductPrice");
+                int stock = rs.getInt("Quantity");
+                
+                list.add(new Product(id, name, price, image, stock));
             }
             return list;
 

@@ -13,6 +13,7 @@ public class Order {
     private String CustomerAddress;
     private int OrderStatusID;
     private int CustomerID;
+    private String StatusName;
 
     public Order() {
     }
@@ -26,6 +27,18 @@ public class Order {
         this.CustomerAddress = CustomerAddress;
         this.OrderStatusID = OrderStatusID;
         this.CustomerID = CustomerID;
+    }
+
+    public Order(int OrderID, Date OrderDate, BigDecimal Total, String CustomerName, String CustomerPhone, String CustomerAddress, int OrderStatusID, int CustomerID, String StatusName) {
+        this.OrderID = OrderID;
+        this.OrderDate = OrderDate;
+        this.Total = Total;
+        this.CustomerName = CustomerName;
+        this.CustomerPhone = CustomerPhone;
+        this.CustomerAddress = CustomerAddress;
+        this.OrderStatusID = OrderStatusID;
+        this.CustomerID = CustomerID;
+        this.StatusName = StatusName;
     }
 
     public int getOrderID() {
@@ -90,6 +103,14 @@ public class Order {
 
     public void setCustomerID(int CustomerID) {
         this.CustomerID = CustomerID;
+    }
+
+    public String getStatusName() {
+        return StatusName;
+    }
+
+    public void setStatusName(String StatusName) {
+        this.StatusName = StatusName;
     }
 
 }

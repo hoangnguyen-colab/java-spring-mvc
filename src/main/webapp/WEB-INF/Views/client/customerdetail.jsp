@@ -87,7 +87,6 @@
                                                     <table class="table">
                                                         <thead class="thead-dark">
                                                             <tr>
-                                                                <th>#</th>
                                                                 <th class="text-center">ID Đơn hàng</th>
                                                                 <th class="text-center">Tổng tiền</th>
                                                                 <th class="text-center">Ngày đặt hàng</th>
@@ -97,46 +96,48 @@
                                                         </thead>
                                                         <tbody>
                                                             <c:forEach items="${orderlist}" var="item">
-<!--                                                                <tr class="accordion-toggle collapsed alert" id="alert-@item.OrderID">
-                                                                    <td class="expand-button" 
-                                                                        id="accordion-${item.getOrderID()}" 
-                                                                        data-toggle="collapse" 
-                                                                        data-parent="#accordion-${item.getOrderID()}" 
-                                                                        href="#collapse-${item.getOrderID()}" 
-                                                                        style="cursor: pointer;">
-                                                                    </td>-->
-                                                                    <td class="text-center" >
-                                                                        <a href="/orderdetail/${item.GetOrderID()}">${item.getOrderID()}</a>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        ${item.getTotal()}
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        ${item.getOrderDate()}
-                                                                    </td>
-                                                                    <th class="text-center">
-                                                                        ${item.getOrderStatusID()}
-                                                                    </th>
-                                                                    <td class="text-center">
-                                                                        <c:choose>
-                                                                            <c:when test="${item.getOrderStatusID() == 1}">
-                                                                                <button class="btn btn-danger" id="@item.OrderID"
-                                                                                        onclick="return CancelOrder('@item.OrderID')">
-                                                                                    Hủy đơn hàng
-                                                                                </button>
-                                                                            </c:when>
-                                                                        </c:choose>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr class="hide-table-padding">
-                                                                    <td colspan="7">
-                                                                        <div id="collapse-@item.OrderID" class="collapse in p-3">
-                                                                            <div class="card card-body" id="@item.OrderID-product-partial">
-                                                                            </div>
+                                                            <td class="text-center" >
+                                                                <a href="/orderdetail/${item.getOrderID()}">${item.getOrderID()}</a>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a href="/orderdetail/${item.getOrderID()}"> 
+                                                                    <fmt:formatNumber type = "number" 
+                                                                                      maxFractionDigits = "3" 
+                                                                                      value = "${item.getTotal()}" />₫
+                                                                </a>
+
+
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a href="/orderdetail/${item.getOrderID()}">
+                                                                    ${item.getOrderDate()}
+                                                                </a>
+                                                            </td>
+                                                            <th class="text-center">
+                                                                <a href="/orderdetail/${item.getOrderID()}">
+                                                                    ${item.getStatusName()}
+                                                                </a>
+                                                            </th>
+                                                            <td class="text-center">
+                                                                <c:choose>
+                                                                    <c:when test="${item.getOrderStatusID() == 1}">
+                                                                        <button class="btn btn-danger" id="@item.OrderID"
+                                                                                onclick="return CancelOrder('@item.OrderID')">
+                                                                            Hủy đơn hàng
+                                                                        </button>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                            </td>
+                                                            </tr>
+                                                            <tr class="hide-table-padding">
+                                                                <td colspan="7">
+                                                                    <div id="collapse-@item.OrderID" class="collapse in p-3">
+                                                                        <div class="card card-body" id="@item.OrderID-product-partial">
                                                                         </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </c:forEach>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
                                                         </tbody>
                                                     </table>
                                                 </div>

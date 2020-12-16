@@ -1,7 +1,6 @@
 package com.spring.controller.client;
 
 import com.google.gson.Gson;
-import com.spring.common.CommonFunction;
 import com.spring.dao.CustomerDAO;
 import com.spring.dao.OrderDAO;
 import com.spring.entity.Customer;
@@ -36,8 +35,8 @@ public class CustomerController {
         if (session.getAttribute("customerLogin") == null) {
             return new ModelAndView("client/login");
         }
-        Customer UID = (Customer) session.getAttribute("customerLogin");
-        List<Order> orderlist = orderdao.LoadOrder(UID.getCustomerID());
+        Customer customer = (Customer) session.getAttribute("customerLogin");
+        List<Order> orderlist = orderdao.LoadOrder(customer.getCustomerID());
 
         return new ModelAndView("client/customerdetail", "orderlist", orderlist);
     }
@@ -46,13 +45,13 @@ public class CustomerController {
     public @ResponseBody
     String ValidateUser(HttpSession session, String CustomerUsername, String CustomerPassword) {
         int result = customerdao.Login(CustomerUsername, CustomerPassword);
-        switch (result) {
-            case -1:
-                return new Gson().toJson(new JsonStatus(false, "Db Error"));
-            case 0:
-                return new Gson().toJson(new JsonStatus(false, "Fail"));
-            default:
-                return new Gson().toJson(new JsonStatus(true, "Success"));
+        if (result == -1) {
+            return new Gson().toJson(new JsonStatus(false, "Db Error"));
+        } else if (result == 0) {
+            return new Gson().toJson(new JsonStatus(false, "Fail"));
+        } else {
+            session.setAttribute("customerLogin", customerdao.GetByUsername(CustomerUsername));
+            return new Gson().toJson(new JsonStatus(true, "Success"));
         }
     }
 

@@ -46,6 +46,15 @@ public class Product {
         this.BrandID = BrandID;
     }
 
+    public Product(int ProductID, String ProductName, BigDecimal ProductPrice, String ProductImage, int ProductStock) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.ProductPrice = ProductPrice;
+        this.ProductImage = ProductImage;
+        this.ProductStock = ProductStock;
+    }
+
+
     public int getProductID() {
         return ProductID;
     }

@@ -52,7 +52,7 @@
                                                     </a>
                                                     <ul class="dropdown">
                                                         <li>
-                                                            <a href="<c:url value="/customer/${sessionScope.customerLogin.getCustomerUsername()}" />">
+                                                            <a href="<c:url value="/profile" />">
                                                                 thông tin tài khoản
                                                             </a>
                                                         </li>
@@ -102,7 +102,7 @@
                                             </a>
                                             <ul class="dropdown">
                                                 <li>
-                                                    <a href="<c:url value="/customer/${sessionScope.customerLogin.getCustomerUsername()}" />">
+                                                    <a href="<c:url value="/profile" />">
                                                         thông tin tài khoản
                                                     </a>
                                                 </li>
