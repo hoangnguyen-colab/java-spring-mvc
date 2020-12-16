@@ -194,6 +194,64 @@ public class ProductDAO {
         }
     }
 
+    public List<Product> GetTopView() {
+        Connection conn = DbContext.getConnection();
+        try {
+            List<Product> list = new ArrayList<>();
+            Statement st = conn.createStatement();
+            String query = "SELECT TOP(8) * FROM PRODUCT\n" +
+                            "ORDER BY PRODUCT.Viewcount DESC";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String name = rs.getString("ProductName");
+                String desc = rs.getString("ProductDescription");
+                BigDecimal price = rs.getBigDecimal("ProductPrice");
+                BigDecimal promoprice = rs.getBigDecimal("PromotionPrice");
+                String img = rs.getString("ProductImage");
+                String url = rs.getString("ProductURL");
+                int brandid = rs.getInt("BrandID");
+                Date createddate = rs.getDate("CreatedDate");
+
+                list.add(new Product(id, name, desc, price, promoprice, img, url, brandid, createddate));
+            }
+            return list;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    public List<Product> GetLastest() {
+        Connection conn = DbContext.getConnection();
+        try {
+            List<Product> list = new ArrayList<>();
+            Statement st = conn.createStatement();
+            String query = "SELECT TOP(8) * FROM PRODUCT\n" +
+                            "ORDER BY PRODUCT.CreatedDate DESC";
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String name = rs.getString("ProductName");
+                String desc = rs.getString("ProductDescription");
+                BigDecimal price = rs.getBigDecimal("ProductPrice");
+                BigDecimal promoprice = rs.getBigDecimal("PromotionPrice");
+                String img = rs.getString("ProductImage");
+                String url = rs.getString("ProductURL");
+                int brandid = rs.getInt("BrandID");
+                Date createddate = rs.getDate("CreatedDate");
+
+                list.add(new Product(id, name, desc, price, promoprice, img, url, brandid, createddate));
+            }
+            return list;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
     public Integer Count() {
         Connection conn = DbContext.getConnection();
         try {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,6 +15,31 @@
                     <h2 style="font-size:70px;">Được Xem Nhiều</h2>
                 </div>
                 <div class="row" id="top-view-product">
+                    <c:forEach items="${viewcount}" var="item">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="blog-hm-wrapper mb-40">
+                                <div class="blog-img">
+                                    <a href="<c:url value="/product/${item.getProductURL()}/${item.getProductID()}"/>">
+                                        <img src="${item.getProductImage()}" alt="${item.getProductName()}">
+                                    </a>
+                                </div>
+                                <div class="blog-hm-content">
+                                    <h3>
+                                        <a href="<c:url value="/product/${item.getProductURL()}/${item.getProductID()}"/>">
+                                            ${item.getProductName()}
+                                        </a>
+                                    </h3>
+                                    <p>
+                                        <span>
+                                            <fmt:formatNumber type = "number" 
+                                                              maxFractionDigits = "3" 
+                                                              value = "${item.getProductPrice()}" />₫
+                                        </span> 
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -24,6 +50,31 @@
                     <h2 style="font-size:70px;">Sản phẩm mới nhất</h2>
                 </div>
                 <div class="row" id="newest-product">
+                    <c:forEach items="${lastest}" var="item">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="blog-hm-wrapper mb-40">
+                                <div class="blog-img">
+                                    <a href="<c:url value="/product/${item.getProductURL()}/${item.getProductID()}"/>">
+                                        <img src="${item.getProductImage()}" alt="${item.getProductName()}">
+                                    </a>
+                                </div>
+                                <div class="blog-hm-content">
+                                    <h3>
+                                        <a href="<c:url value="/product/${item.getProductURL()}/${item.getProductID()}"/>">
+                                            ${item.getProductName()}
+                                        </a>
+                                    </h3>
+                                    <p>
+                                        <span>
+                                            <fmt:formatNumber type = "number" 
+                                                              maxFractionDigits = "3" 
+                                                              value = "${item.getProductPrice()}" />₫
+                                        </span> 
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
