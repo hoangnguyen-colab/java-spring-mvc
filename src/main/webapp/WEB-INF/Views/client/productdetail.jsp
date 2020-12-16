@@ -61,106 +61,107 @@
                             <div class="product-price">
                                 <h5 class="pd-sub-title">Giá</h5>
                                 <c:choose>
-                                    <c:when test="${empty item.getPromotionPrice()}">
-                                        <span class="original-price">
-                                            <fmt:formatNumber type = "number" 
-                                                              maxFractionDigits = "3" 
-                                                              value = "${item.getProductPrice()}" />₫
-                                        </span>
-                                    </c:when>
-                                    <c:otherwise>
+                                    <c:when test="${not empty item.getPromotionPrice()}">
                                         <div class="original-price">
                                             <fmt:formatNumber type = "number" 
                                                               maxFractionDigits = "3" 
                                                               value = "${product.getPromotionPrice()}" />₫
                                         </div>
+                                    </c:when>
+                                    <c:otherwise>
                                         <div class="discount-price">
                                             <fmt:formatNumber type = "number" 
                                                               maxFractionDigits = "3" 
                                                               value = "${product.getProductPrice()}" />₫
-                                        </c:otherwise>
-                                    </c:choose>
+                                        </div>
+                                        <span class="original-price">
+                                            <fmt:formatNumber type = "number" 
+                                                              maxFractionDigits = "3" 
+                                                              value = "${product.getPromotionPrice()}" />₫
+                                        </span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <div class="product-overview">
+                                <h5 class="pd-sub-title">Tổng quan</h5>
+                                <p>${product.getProductDescription()}</p>
+                            </div>
+                            <div class="quickview-plus-minus">
+                                <div class="cart-plus-minus">
+                                    <input type="text" value="01" name="qtybutton" class="cart-plus-minus-box" id="quantity-input">
                                 </div>
+                                <div class="quickview-btn-cart">
+                                    <a class="btn-style cr-btn" href="javascrip:void(0);" id="submit-btn">
+                                        <span>
+                                            <i class="ti-shopping-cart" id="btn-icon"></i> thêm vào giỏ hàng
+                                        </span>
+                                    </a>
+                                </div>
+                                <div id="alerts"></div>
+                            </div>
+                            <div id="config-detail">
                                 <div class="product-overview">
-                                    <h5 class="pd-sub-title">Tổng quan</h5>
-                                    <p>${product.getProductDescription()}</p>
-                                </div>
-                                <div class="quickview-plus-minus">
-                                    <div class="cart-plus-minus">
-                                        <input type="text" value="01" name="qtybutton" class="cart-plus-minus-box" id="quantity-input">
-                                    </div>
-                                    <div class="quickview-btn-cart">
-                                        <a class="btn-style cr-btn" href="javascrip:void(0);" id="submit-btn">
-                                            <span>
-                                                <i class="ti-shopping-cart" id="btn-icon"></i> thêm vào giỏ hàng
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div id="alerts"></div>
-                                </div>
-                                <div id="config-detail">
-                                    <div class="product-overview">
-                                        <h5 class="pd-sub-title">Chi tiết</h5>
+                                    <h5 class="pd-sub-title">Chi tiết</h5>
 
-                                    </div>
                                 </div>
-                                <div class="product-share">
-                                    <h5 class="pd-sub-title">Chia sẻ</h5>
-                                    <ul>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="icofont icofont-social-facebook"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="icofont icofont-social-twitter"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="icofont icofont-social-pinterest"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"> <i class="icofont icofont-social-instagram"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            </div>
+                            <div class="product-share">
+                                <h5 class="pd-sub-title">Chia sẻ</h5>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="icofont icofont-social-facebook"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="icofont icofont-social-twitter"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="icofont icofont-social-pinterest"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"> <i class="icofont icofont-social-instagram"></i></a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            $(document).ready(function () {
-                $("#submit-btn").click(function () {
-                    event.preventDefault();
-                    let prodid = ${product.getProductID()};
-                    let quantity = $("#quantity-input").val();
+    <script>
+        $(document).ready(function () {
+            $("#submit-btn").click(function () {
+                event.preventDefault();
+                let prodid = ${product.getProductID()};
+                let quantity = $("#quantity-input").val();
 
-                    $.ajax({
-                        url: "<c:url value="/cart/addtocart" />",
-                        type: "get",
-                        data: {
-                            prodid: prodid,
-                            quantity: quantity
-                        },
-                        dataType: "json",
-                        contentType: "application/json",
-                        success: function (data) {
-                            console.log(data);
-                            if (data.Status == true) {
-                                swal("Success", "Add to cart success!", "success")
-                                        .then((value) => {
-                                            location.reload();
-                                        });
-                            } else {
-                                swal("Failed", data.message, "error");
-                            }
-                        },
-                        error: function (response) {
-                            swal("Failed", "Add to cart failed!", "error");
+                $.ajax({
+                    url: "<c:url value="/cart/addtocart" />",
+                    type: "get",
+                    data: {
+                        prodid: prodid,
+                        quantity: quantity
+                    },
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.Status == true) {
+                            swal("Success", "Add to cart success!", "success")
+                                    .then((value) => {
+                                        location.reload();
+                                    });
+                        } else {
+                            swal("Failed", data.message, "error");
                         }
-                    });
+                    },
+                    error: function (response) {
+                        swal("Failed", "Add to cart failed!", "error");
+                    }
                 });
             });
-        </script>        
-    </body>
+        });
+    </script>        
+</body>
 </html>
