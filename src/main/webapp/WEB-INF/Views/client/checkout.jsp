@@ -23,6 +23,9 @@
             </div>
         </div>
 
+        <c:set var="subtotal" value="${0}"/>
+        <c:set var="total" value="${0}"/>
+
         <div class="checkout-area pt-130 pb-100">
             <div class="container">
                 <div class="row">
@@ -79,43 +82,44 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-<!--                                            @foreach (var item in Model)
-                                            {
 
-                                            subtotal = 0;
-                                            <tr class="cart_item">
-                                                <td class="product-name">
-                                                    @item.product.ProductName
-                                                    <strong class="product-quantity"> × @item.quantity</strong>
-                                                </td>
-                                                <td class="product-total">
-                                                    @if (item.product.PromotionPrice.HasValue)
-                                                    {
-                                                    tongsp = tongsp + item.quantity;
-                                                    subtotal = (item.product.PromotionPrice.Value * item.quantity);
-                                                    total += subtotal;
-                                                    <span class="amount">
-                                                        @subtotal.ToString("#,##0")₫
-                                                    </span>
-                                                    }
-                                                    else
-                                                    {
-                                                    tongsp = tongsp + item.quantity;
-                                                    subtotal = (item.product.ProductPrice * item.quantity);
-                                                    total += subtotal;
-                                                    <span class="amount">
-                                                        @subtotal.ToString("#,##0")₫
-                                                    </span>
-                                                    }
-                                                </td>
-                                            </tr>
-                                            }-->
+                                            <c:forEach var="item" items="${sessionScope.cartlist}">
+                                                <tr class="cart_item">
+                                                    <td class="product-name">
+                                                        ${item.product.getProductName()}
+                                                        <strong class="product-quantity"> × ${item.quantity}</strong>
+                                                    </td>
+                                                    <td class="product-total">
+                                                        <c:choose>
+                                                            <c:when test="${empty item.product.getPromotionPrice()}">
+                                                                <c:set var="subtotal" value="${subtotal + item.product.getProductPrice() * item.quantity}" />
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:set var="subtotal" value="${subtotal + item.product.getPromotionPrice() * item.quantity}" />
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <span class="amount">
+                                                            <fmt:formatNumber type = "number" 
+                                                                              maxFractionDigits = "3" 
+                                                                              value = "${subtotal}" />₫
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <c:set var="total" value="${total + subtotal}" />
+                                                <c:set var="subtotal" value="${0}" />
+                                            </c:forEach>
                                         </tbody>
                                         <tfoot>
                                             <tr class="order-total">
                                                 <th>Tổng</th>
                                                 <td>
-                                                    <strong><span class="amount">@total.ToString("#,##0")₫</span></strong>
+                                                    <strong>
+                                                        <span class="amount">
+                                                            <fmt:formatNumber type = "number" 
+                                                                              maxFractionDigits = "3" 
+                                                                              value = "${total}" />₫
+                                                        </span>
+                                                    </strong>
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -166,6 +170,43 @@
                 </div>
             </div>
         </div>
+
+        <script src="<c:url value="assets/jquery.validate.min.js"/>"></script>
+        <script>
+            $(document).ready(function () {
+                console.log("Run");
+                $("#checkout-form").validate({
+                    rules: {
+                        'customer-fullname': "required",
+                        'customer-address': "required",
+                        'customer-phone': "required",
+                        'customer-email': {
+                            email: true
+                        }
+                    },
+                    messages: {
+                        'customer-fullname': "Không thể trống",
+                        'customer-address': "Không thể trống",
+                        'customer-phone': "Không thể trống",
+                        'customer-email': {
+                            email: "Không đúng định dạng email"
+                        }
+                    },
+                    submitHandler: function () {
+                        event.preventDefault();
+                        $.ajax({
+                            type: "get",
+                            url: "/submitcheckout",
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
 
     </body>
 </html>

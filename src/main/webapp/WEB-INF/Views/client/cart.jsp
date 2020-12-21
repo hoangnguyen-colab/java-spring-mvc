@@ -23,6 +23,9 @@
             </div>
         </div>
 
+        <c:set var="subtotal" value="${0}"/>
+        <c:set var="total" value="${0}"/>
+
         <div class="product-cart-area pt-120 pb-130">
             <c:choose>
                 <c:when test="${empty sessionScope.cartlist}">
@@ -85,6 +88,7 @@
                                                                                       maxFractionDigits = "3" 
                                                                                       value = "${item.product.getProductPrice()}" />₫
                                                                 </span>
+                                                                <c:set var="subtotal" value="${subtotal + item.product.getProductPrice() * item.quantity}" />
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <span>
@@ -92,11 +96,14 @@
                                                                                       maxFractionDigits = "3" 
                                                                                       value = "${item.product.getPromotionPrice()}" />₫
                                                                 </span>
+                                                                <c:set var="subtotal" value="${subtotal + item.product.getPromotionPrice() * item.quantity}" />
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </td>
                                                     <td class="product-subtotal text-center">
-                                                        @subtotal.ToString("#,##0")₫
+                                                        <fmt:formatNumber type = "number" 
+                                                                          maxFractionDigits = "3" 
+                                                                          value = "${subtotal}" />₫
                                                     </td>
                                                     <td class="product-cart-icon product-subtotal text-center">
                                                         <a href="#">
@@ -104,6 +111,8 @@
                                                         </a>
                                                     </td>
                                                 </tr>
+                                                <c:set var="total" value="${total + subtotal}" />
+                                                <c:set var="subtotal" value="${0}" />
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -132,7 +141,11 @@
                                     <ul>
                                         <li>
                                             đơn giá
-                                            <span>@total.ToString("#,##0")₫</span>
+                                            <span>
+                                                <fmt:formatNumber type = "number" 
+                                                                  maxFractionDigits = "3" 
+                                                                  value = "${total}" />₫
+                                            </span>
                                         </li>
                                         <li class="order-total">
                                             vận chuyển
@@ -140,7 +153,11 @@
                                         </li>
                                         <li>
                                             tổng đơn hàng
-                                            <span>@total.ToString("#,##0")₫</span>
+                                            <span>
+                                                <fmt:formatNumber type = "number" 
+                                                                  maxFractionDigits = "3" 
+                                                                  value = "${total}" />₫
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>

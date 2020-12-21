@@ -206,7 +206,6 @@
                             dataType: "json",
                             contentType: "application/json",
                             success: function (data) {
-                                console.log(data);
                                 if (data.Status == true) {
                                     swal("Success", "Add to cart success!", "success")
                                             .then((value) => {
@@ -222,34 +221,6 @@
                         });
                     })
                 });
-
-//                let search = "@ViewBag.search";
-//                let sort = "@ViewBag.sort";
-//
-//                $("#sort-filter").on('change', function (event) {
-//                    let url =
-//                            '@Html.Raw(Url.Action("Shop", "Shop", new { search = "search-value", sort = "sort-value" }))';
-//                    url = url.replace("search-value", search);
-//                    url = url.replace("sort-value", this.value);
-//                    window.location.href = url;
-//                });
-//
-//                $("#search-product").autocomplete({
-//                    source: function (request, response) {
-//                        $.ajax({
-//                            url: "123123",
-//                            type: "POST",
-//                            dataType: "json",
-//                            data: {prefix: request.term},
-//                            success: function (data) {
-//                                response($.map(data.name, function (item) {
-//                                    return {label: item.ProductName, value: item.ProductName};
-//                                }));
-//                            }
-//                        });
-//                    },
-//                    minLength: 2
-//                });
             });
         </script>
 
