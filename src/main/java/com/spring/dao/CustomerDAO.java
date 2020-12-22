@@ -89,7 +89,7 @@ public class CustomerDAO {
         }
         try {
             String sql = "INSERT INTO CUSTOMER\n"
-                    + "VALUE(?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, model.getCustomerUsername());
@@ -97,7 +97,7 @@ public class CustomerDAO {
             statement.setString(3, model.getCustomeEmail());
             statement.setString(4, model.getCustomerName());
             statement.setString(5, model.getCustomerPhone());
-            statement.setString(5, model.getCustomerAddress());
+            statement.setString(6, model.getCustomerAddress());
             statement.setDate(7, java.sql.Date.valueOf(java.time.LocalDate.now()));
 
             int rs = statement.executeUpdate();
