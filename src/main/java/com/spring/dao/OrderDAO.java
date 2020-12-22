@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -143,7 +144,7 @@ public class OrderDAO {
         }
     }
 
-    public int AddOrder(String customername, String customerphone, String customeraddress, BigDecimal total) {
+    public int AddOrder(int customerid, String customername, String customerphone, String customeraddress, BigDecimal total) {
         Connection conn = DbContext.getConnection();
         try {
             String sql = "INSERT dbo.[ORDER]\n"
@@ -156,7 +157,7 @@ public class OrderDAO {
                     + "    ?, -- CustomerPhone - NVARCHAR\n"
                     + "    ?, -- CustomerAddress - NVARCHAR\n"
                     + "    ?, -- OrderStatusID - INT\n"
-                    + "    null -- CustomerID - INT\n"
+                    + "    ? -- CustomerID - INT\n"
                     + ")";
 
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -166,11 +167,16 @@ public class OrderDAO {
             statement.setString(4, customerphone);
             statement.setString(5, customeraddress);
             statement.setInt(6, 1);
+            if (customerid != 0) {
+                statement.setInt(7, customerid);
+            } else {
+                statement.setNull(7, Types.INTEGER);
+            }
 
             int rs = statement.executeUpdate();
-            if(rs != 0){
+            if (rs != 0) {
                 return GetOrderID();
-            } 
+            }
             return rs;
 
         } catch (SQLException e) {
@@ -178,21 +184,25 @@ public class OrderDAO {
             return -1;
         }
     }
-    
+
     public Integer GetOrderID() {
         Connection conn = DbContext.getConnection();
         try {
-            String query = "SELECT top(1) OrderID FROM dbo.[ORDER] o order by o.OrderID desc";
+            String query = "SELECT TOP(1) OrderID FROM dbo.[ORDER] o ORDER BY o.OrderID DESC";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query);
+            int orderid = 0;
+            while (rs.next()) {
+                orderid = rs.getInt("OrderID");
+            }
 
-            return rs.getInt("OrderID");
+            return orderid;
 
         } catch (SQLException e) {
-            return null;
+            return -2;
         }
     }
-    
+
     public int AddOrderDetail(int orderid, int productid, int quantity) {
         Connection conn = DbContext.getConnection();
         try {

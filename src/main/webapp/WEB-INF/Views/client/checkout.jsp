@@ -193,12 +193,13 @@
                         }
                     },
                     submitHandler: function () {
-                         var data = {
-                        "CustomerName": $("#customer-fullname").val(),
-                        "CustomerPhone": $("#customer-phone").val(),
-                        "CustomerAddress": $("#customer-address").val(),
-                        "Total":"${total}"
-                    };
+                        var data = {
+                            "CustomerName": $("#customer-fullname").val(),
+                            "CustomerPhone": $("#customer-phone").val(),
+                            "CustomerAddress": $("#customer-address").val(),
+                            "Total": "${total}"
+                        };
+                        $("#checkout-btn").attr("disabled", true);
                         event.preventDefault();
                         $.ajax({
                             type: "get",
@@ -207,7 +208,17 @@
                             dataType: "json",
                             contentType: "application/json",
                             success: function (data) {
-                                console.log(data);
+                                if (data.Status) {
+                                    swal("Success", `${data.Message}`, "success").then(function () {
+                                        location.href = "/";
+                                    });
+                                } else {
+                                    swal("Fail", `${data.Message}`, "error");
+                                    $("#checkout-btn").attr("disabled", false);
+                                }
+                            }, error: function () {
+                                swal("Fail", `Fail to create your order`, "success");
+                                $("#checkout-btn").attr("disabled", false);
                             }
                         });
                     }

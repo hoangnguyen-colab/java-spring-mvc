@@ -38,6 +38,7 @@
                                 <li class="list-group-item">Customer Address</li>
                                 <li class="list-group-item">Customer Phone</li>
                                 <li class="list-group-item">Created Date</li>
+                                <li class="list-group-item">Total</li>
                                 <li class="list-group-item">Status</li>
                             </ul>
                         </div>
@@ -48,6 +49,11 @@
                                 <li class="list-group-item">${customerdetail.getCustomerAddress()}</li>
                                 <li class="list-group-item">${customerdetail.getCustomerPhone()}</li>
                                 <li class="list-group-item">${customerdetail.getOrderDate()}</li>
+                                <li class="list-group-item">
+                                    <fmt:formatNumber type = "number" 
+                                                      maxFractionDigits = "3" 
+                                                      value = "${customerdetail.getTotal()}" />₫
+                                </li>
                                 <li class="list-group-item">
                                     <div class="alert" role="alert" id="alert-status">
                                         ${customerdetail.getStatusName()}
@@ -83,7 +89,11 @@
                                         <img src="${item.getProductImage()}" style="max-height: 50px;" />
                                     </td>
                                     <td>${item.getProductName()}</td>
-                                    <td>${item.getProductPrice()}</td>
+                                    <td>
+                                        <fmt:formatNumber type = "number" 
+                                                          maxFractionDigits = "3" 
+                                                          value = "${item.getProductPrice()}" />₫
+                                    </td>
                                     <td>${item.getProductStock()}</td>
                                 </tr>
                             </c:forEach>

@@ -52,14 +52,22 @@ public class OrderController {
             Customer customer = (Customer) session.getAttribute("customerLogin");
             int customerid = customer == null ? 0 : customer.getCustomerID();
 
-            int orderid = orderdao.AddOrder(cus.getCustomerName(), cus.getCustomerPhone(), cus.getCustomerAddress(), Total);
+            int orderid = orderdao.AddOrder(customerid, cus.getCustomerName(), cus.getCustomerPhone(), cus.getCustomerAddress(), Total);
+            if (orderid == 0) {
+
+                return new Gson().toJson(new JsonStatus(false, "Cannot create your order"));
+            }
+            if (orderid == -2) {
+
+                return new Gson().toJson(new JsonStatus(false, "Fail to create your order"));
+            }
 
             List<CartItem> cart = (List<CartItem>) session.getAttribute("cartlist");
             for (int i = 0; i < cart.size(); i++) {
                 orderdao.AddOrderDetail(orderid, cart.get(i).product.getProductID(), cart.get(i).quantity);
             }
-            
-            return new Gson().toJson(new JsonStatus(true, orderid + ""));
+            session.setAttribute("cartlist", null);
+            return new Gson().toJson(new JsonStatus(true, "Success"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new Gson().toJson(new JsonStatus(false, e.getMessage()));

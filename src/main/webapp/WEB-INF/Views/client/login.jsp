@@ -204,7 +204,7 @@
                         $.ajax({
                             url: "<c:url value="/customer/signup"/>",
                             type: "get",
-                            data: JSON.stringify(data),
+                            data: data,
                             dataType: "json",
                             contentType: "application/json",
                             success: function (response) {

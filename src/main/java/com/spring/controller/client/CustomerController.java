@@ -60,15 +60,14 @@ public class CustomerController {
     String SignUpUser(HttpSession session, Customer model) {
         int result = customerdao.Signup(model);
 
-        switch (result) {
-            case -1:
-                return new Gson().toJson(new JsonStatus(false, "Db Error"));
-            case -2:
-                return new Gson().toJson(new JsonStatus(false, "Username already taken"));
-            case 0:
-                return new Gson().toJson(new JsonStatus(false, "Fail"));
-            default:
-                return new Gson().toJson(new JsonStatus(true, "Success"));
+        if (result == -1) {
+            return new Gson().toJson(new JsonStatus(false, "Db Error"));
+        } else if (result == 0) {
+            return new Gson().toJson(new JsonStatus(false, "Fail"));
+        } else if (result == -2) {
+            return new Gson().toJson(new JsonStatus(false, "Username already taken"));
+        } else {
+            return new Gson().toJson(new JsonStatus(true, "Success"));
         }
     }
 
