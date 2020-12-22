@@ -2,12 +2,12 @@ package com.spring.controller.client;
 
 import com.google.gson.Gson;
 import com.spring.dao.OrderDAO;
-import com.spring.dao.ProductDAO;
 import com.spring.entity.CartItem;
+import com.spring.entity.Customer;
 import com.spring.entity.JsonStatus;
+import com.spring.entity.Order;
 import java.io.IOException;
-import java.net.http.HttpClient;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,13 +44,24 @@ public class OrderController {
 
         return mnv;
     }
-    
+
     @RequestMapping(value = "/submitcheckout", method = RequestMethod.GET)
     public @ResponseBody
-    String Checkout(HttpSession session) {
+    String Checkout(HttpSession session, Customer cus, BigDecimal Total) {
         try {
-            return new Gson().toJson(new JsonStatus(true, "Success"));
+            Customer customer = (Customer) session.getAttribute("customerLogin");
+            int customerid = customer == null ? 0 : customer.getCustomerID();
+
+            int orderid = orderdao.AddOrder(cus.getCustomerName(), cus.getCustomerPhone(), cus.getCustomerAddress(), Total);
+
+            List<CartItem> cart = (List<CartItem>) session.getAttribute("cartlist");
+            for (int i = 0; i < cart.size(); i++) {
+                orderdao.AddOrderDetail(orderid, cart.get(i).product.getProductID(), cart.get(i).quantity);
+            }
+            
+            return new Gson().toJson(new JsonStatus(true, orderid + ""));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new Gson().toJson(new JsonStatus(false, e.getMessage()));
         }
     }

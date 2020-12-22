@@ -193,10 +193,17 @@
                         }
                     },
                     submitHandler: function () {
+                         var data = {
+                        "CustomerName": $("#customer-fullname").val(),
+                        "CustomerPhone": $("#customer-phone").val(),
+                        "CustomerAddress": $("#customer-address").val(),
+                        "Total":"${total}"
+                    };
                         event.preventDefault();
                         $.ajax({
                             type: "get",
                             url: "/submitcheckout",
+                            data: data,
                             dataType: "json",
                             contentType: "application/json",
                             success: function (data) {
