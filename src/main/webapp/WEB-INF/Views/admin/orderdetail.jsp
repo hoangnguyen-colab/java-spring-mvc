@@ -42,18 +42,72 @@
                                 </li>
                                 <li class="list-group-item">
                                     <c:choose>
-                                        <c:when test="${orderdetail.getOrderStatusID() == 1 || orderdetail.getOrderStatusID() == 5}">
+                                        <c:when test="${orderdetail.getOrderStatusID() == 1}">
                                             <div class="row">
                                                 <div class="col-sm">
+                                                    <select class="alert" id="orderstatus-${orderdetail.getOrderID()}">
+                                                        <option value="1" id="">
+                                                            Đang xử lý
+                                                        </option>
+                                                        <option value="2" id="">
+                                                            Đang giao hàng
+                                                        </option>
+                                                        <option value="3" id="">
+                                                            Đã giao hàng
+                                                        </option>
+                                                        <option value="4" id="">
+                                                            Hàng lỗi 
+                                                        </option>
+                                                        <option value="5" id="">
+                                                            Đã hủy
+                                                        </option>
+
+                                                    </select>
                                                     <div class="alert" role="alert" id="alert-status">
                                                         ${orderdetail.getStatusName()}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm">
-                                                    <button class="btn btn-sm btn-info" onclick="">
-                                                        <i class="mdi mdi-format-list-bulleted"></i>
+                                                    <button class="btn btn-sm btn-success"
+                                                            type="submit" value="Save"
+                                                            id="save-${orderdetail.getOrderID()}"
+                                                            onclick="return SaveEdit('${orderdetail.getOrderID()}')">
+                                                        <i class="mdi mdi-check"></i>
                                                     </button>
                                                 </div>
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${orderdetail.getOrderStatusID() == 2}">
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <select class="alert" id="orderstatus-${orderdetail.getOrderID()}" onchange="return ChangeOrder('${orderdetail.getOrderID()}','${orderdetail.getOrderStatusID()}')">
+                                                        <option value="2" id="">
+                                                            Đang giao hàng
+                                                        </option>
+                                                        <option value="3" id="">
+                                                            Đã giao hàng
+                                                        </option>
+                                                        <option value="4" id="">
+                                                            Hàng lỗi 
+                                                        </option>
+                                                        <option value="5" id="">
+                                                            Đã hủy
+                                                        </option>
+
+                                                    </select>
+                                                    <div class="alert" role="alert" id="alert-status">
+                                                        ${orderdetail.getStatusName()}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <button class="btn btn-sm btn-success"
+                                                            type="submit" value="Save"
+                                                            id="save-${orderdetail.getOrderID()}"
+                                                            onclick="return SaveEdit('${orderdetail.getOrderID()}')">
+                                                        <i class="mdi mdi-check"></i>
+                                                    </button>
+                                                </div>
+                                                    
                                             </div>
                                         </c:when>
                                         <c:otherwise>
@@ -108,20 +162,66 @@
             </div>
         </div>
 
+        <script src="/assets/sweetalert.min.js"></script>
         <script>
-            $(document).ready(function () {
-                var alert = $("#alert-status");
-                var statusid = ${orderdetail.getOrderStatusID()};
-                if (statusid === 1) {
-                    alert.addClass('alert-secondary');
-                } else if (statusid === 2) {
-                    alert.addClass('alert-primary');
-                } else if (statusid === 3) {
-                    alert.addClass('alert-success');
-                } else if (statusid === 4 || statusid === 5) {
-                    alert.addClass('alert-danger');
-                }
-            })
+                                        $(document).ready(function () {
+                                            var alert = $("#alert-status");
+                                            var statusid = ${orderdetail.getOrderStatusID()};
+                                            if (statusid === 1) {
+                                                alert.addClass('alert-secondary');
+                                            } else if (statusid === 2) {
+                                                alert.addClass('alert-primary');
+                                            } else if (statusid === 3) {
+                                                alert.addClass('alert-success');
+                                            } else if (statusid === 4 || statusid === 5) {
+                                                alert.addClass('alert-danger');
+                                            }
+                                        })
+        </script>
+        <script>
+
+                                                function ChangeOrder(id, status) {
+                                                if ($(`#orderstatus-${orderdetail.getOrderID()}`).val() == status) {
+                                                $(`#save-${id}`).hide();
+                                                } else {
+                                                $(`#save-${id}`).show();
+                                                }
+                                                }
+                                                function SaveEdit(id) {
+                                                swal({
+                                                title: `EDIT order with id: ${orderdetail.getOrderID()}?`,
+                                                        icon: "warning",
+                                                        buttons: true,
+                                                        dangerMode: true,
+                                                })
+                                                        .then((willDelete) => {
+                                                        if (willDelete) {
+                                                        $.ajax({
+                                                                type: "get",
+                                                                url: `/editorder`,
+                                                                data: {
+                                                                        "OrderID": id,
+                                                                        "StatusID": $(`#orderstatus-${orderdetail.getOrderID()}`).val()
+                                                                },
+                                                                dataType: "json",
+                                                                contentType: "application/json",
+                                                                success: function (response) {
+                                                                    if (response.Status) {
+                                                                        swal("Edited!", "", "success")
+                                                                            .then((value) => {
+                                                                            location.href = '/admin/orderlist';
+                                                                        });
+                                                                    } else {
+                                                                        swal("Edit fail!", "", "error");
+                                                                        }
+                                                                    },
+                                                                error: function (error) {
+                                                                swal("Edit fail!", "", "error");
+                                                                }
+                                                        });
+                                                        }
+                                                        });
+                                                };
         </script>
     </body>
 </html>

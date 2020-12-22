@@ -3,6 +3,7 @@ package com.spring.dao;
 import com.spring.common.CommonFunction;
 import com.spring.dbcontext.DbContext;
 import com.spring.entity.Order;
+import com.spring.entity.OrderStatus;
 import com.spring.entity.Product;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -219,6 +220,48 @@ public class OrderDAO {
             statement.setInt(1, quantity);
             statement.setInt(2, orderid);
             statement.setInt(3, productid);
+
+            int rs = statement.executeUpdate();
+
+            return rs;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public List<OrderStatus> StatusList() {
+        Connection conn = DbContext.getConnection();
+        try {
+            List<OrderStatus> list = new ArrayList<>();
+            String query = "Select * From ORDERSTATUS";
+            PreparedStatement st = conn.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("StatusID");
+                String name = rs.getString("StatusName");
+
+                list.add(new OrderStatus(id, name));
+            }
+            return list;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public int EditOrder(int orderid, int statusid) {
+        Connection conn = DbContext.getConnection();
+        try {
+            String sql = "UPDATE dbo.[ORDER]\n"
+                    + "SET\n"
+                    + "    dbo.[ORDER].OrderStatusID = ?\n"
+                    + "    WHERE dbo.[ORDER].OrderID=?";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, statusid);
+            statement.setInt(2, orderid);
 
             int rs = statement.executeUpdate();
 
