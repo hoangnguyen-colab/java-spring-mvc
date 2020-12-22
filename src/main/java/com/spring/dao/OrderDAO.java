@@ -20,7 +20,8 @@ public class OrderDAO {
         Connection conn = DbContext.getConnection();
         try {
             List<Order> list = new ArrayList<>();
-            String query = "SELECT * FROM [ORDER] ORDER BY OrderID";
+            String query = "SELECT * FROM [ORDER] \n" +
+                            "JOIN ORDERSTATUS ON [ORDER].OrderStatusID = ORDERSTATUS.StatusID";
             PreparedStatement st = conn.prepareStatement(query);
 
             ResultSet rs = st.executeQuery();
@@ -33,7 +34,8 @@ public class OrderDAO {
                 String customeraddress = rs.getString("CustomerAddress");
                 int orderstatus = rs.getInt("OrderStatusID");
                 int customerid = rs.getInt("CustomerID");
-                list.add(new Order(id, orderDate, total, customername, customerphone, customeraddress, orderstatus, customerid));
+                String statusname = rs.getString("StatusName");
+                list.add(new Order(id, orderDate, total, customername, customerphone, customeraddress, orderstatus, customerid, statusname));
             }
             return list;
 
