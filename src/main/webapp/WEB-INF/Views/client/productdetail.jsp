@@ -61,11 +61,11 @@
                             <div class="product-price">
                                 <h5 class="pd-sub-title">Giá</h5>
                                 <c:choose>
-                                    <c:when test="${not empty item.getPromotionPrice()}">
+                                    <c:when test="${item.getPromotionPrice() == 0 || empty item.getPromotionPrice()}">
                                         <div class="original-price">
                                             <fmt:formatNumber type = "number" 
                                                               maxFractionDigits = "3" 
-                                                              value = "${product.getPromotionPrice()}" />₫
+                                                              value = "${product.getProductPrice()}" />₫
                                         </div>
                                     </c:when>
                                     <c:otherwise>
